@@ -10,9 +10,8 @@ public class BookEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "bookId")
     private long bookId;
-
     @Basic
-    @Column(name="isbn")
+    @Column(name="isbn", unique = true)
     private String isbn;
     @Basic
     @Column(name="title")
