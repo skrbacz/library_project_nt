@@ -1,0 +1,87 @@
+package com.projectnt.book;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name= "books", schema= "library")
+public class BookEntity {
+
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id
+    @Column(name = "book_id")
+    private long book_id;
+    @Basic
+    @Column(name="isbn")
+    private String isbn;
+    @Basic
+    @Column(name="title")
+    private String title;
+    @Basic
+    @Column(name="author")
+    private String author;
+    @Basic
+    @Column(name="publisher")
+    private String publisher;
+    @Basic
+    @Column(name="year_published")
+    private int yearPublished;
+    @Basic
+    @Column(name="available_books")
+    private int availableBooks;
+
+    public long getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(long book_id) {
+        this.book_id = book_id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public int getYearPublished() {
+        return yearPublished;
+    }
+
+    public void setYearPublished(int yearPublished) {
+        this.yearPublished = yearPublished;
+    }
+
+    public int getAvailableBooks() {
+        return availableBooks;
+    }
+
+    public void setAvailableBooks(int availableBooks) {
+        this.availableBooks = availableBooks;
+    }
+}
