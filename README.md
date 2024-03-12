@@ -1,1 +1,1 @@
-library project for course of network technologies
+library project for network technologies course
