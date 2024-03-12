@@ -5,6 +5,7 @@ import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,25 +17,24 @@ public class LoanEntity {
     @Column(name= "loanId")
     private long loanId;
 
-    @OneToMany
-    @JoinColumn(name = "bookId")
-    private List<BookEntity> book;
+    @ManyToOne
+    @JoinColumn(name = "bookId", referencedColumnName = "bookId", nullable = false)
+    public BookEntity bookId;
 
-    @OneToMany
-    @JoinColumn(name= "userId")
-    private List<UserEntity> userId;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    public UserEntity userId;
 
-    @Basic
     @Column(name="loanDate")
-    private DateFormat loanDate;
+    private Date loanDate;
 
     @Basic
     @Column(name= "dueDate")
-    private DateFormat dueDate;
+    private Date dueDate;
 
     @Basic
     @Column(name="returnDate")
-    private DateFormat returnDate;
+    private Date returnDate;
 
     public long getLoanId() {
         return loanId;
@@ -44,43 +44,43 @@ public class LoanEntity {
         this.loanId = loanId;
     }
 
-    public List<BookEntity> getBook() {
-        return book;
+    public BookEntity getBookId() {
+        return bookId;
     }
 
-    public void setBook(List<BookEntity> book) {
-        this.book = book;
+    public void setBookId(BookEntity bookId) {
+        this.bookId = bookId;
     }
 
-    public List<UserEntity> getUserId() {
+    public UserEntity getUserId() {
         return userId;
     }
 
-    public void setUserId(List<UserEntity> userId) {
+    public void setUserId(UserEntity userId) {
         this.userId = userId;
     }
 
-    public DateFormat getLoanDate() {
+    public Date getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(DateFormat loanDate) {
+    public void setLoanDate(Date loanDate) {
         this.loanDate = loanDate;
     }
 
-    public DateFormat getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(DateFormat dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public DateFormat getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(DateFormat returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 }

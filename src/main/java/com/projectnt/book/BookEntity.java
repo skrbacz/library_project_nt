@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 @Table(name= "books", schema= "library")
 public class BookEntity {
 
+    @Id()
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Id
     @Column(name = "bookId")
     private long bookId;
+
     @Basic
     @Column(name="isbn")
     private String isbn;
@@ -23,10 +24,10 @@ public class BookEntity {
     @Column(name="publisher")
     private String publisher;
     @Basic
-    @Column(name="year_published")
+    @Column(name="yearPublished")
     private int yearPublished;
     @Basic
-    @Column(name="available_books")
+    @Column(name="availableBooks")
     private int availableBooks;
 
     public long getBookId() {

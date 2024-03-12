@@ -4,6 +4,7 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
+import java.awt.print.Book;
 import java.text.DateFormat;
 import java.util.List;
 
@@ -11,18 +12,18 @@ import java.util.List;
 @Table(name="reviews", schema = "library")
 public class ReviewEntity {
 
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "reviewId")
     private long reviewId;
 
-    @OneToMany
-    @JoinColumn(name= "userId")
-    private List<UserEntity> userId;
+    @ManyToOne
+    @JoinColumn(name = "bookId", referencedColumnName = "bookId",nullable = false)
+    public BookEntity bookId;
 
-    @OneToMany
-    @JoinColumn(name= "bookId")
-    private List<BookEntity> bookId;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName= "userId", nullable = false)
+    public UserEntity userId;
 
     @Basic
     @Column(name="rating")
@@ -44,20 +45,20 @@ public class ReviewEntity {
         this.reviewId = reviewId;
     }
 
-    public List<UserEntity> getUserId() {
-        return userId;
-    }
-
-    public void setUserId(List<UserEntity> userId) {
-        this.userId = userId;
-    }
-
-    public List<BookEntity> getBookId() {
+    public BookEntity getBookId() {
         return bookId;
     }
 
-    public void setBookId(List<BookEntity> bookId) {
+    public void setBookId(BookEntity bookId) {
         this.bookId = bookId;
+    }
+
+    public UserEntity getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UserEntity userId) {
+        this.userId = userId;
     }
 
     public int getRating() {
@@ -84,3 +85,4 @@ public class ReviewEntity {
         this.reviewDate = reviewDate;
     }
 }
+
