@@ -8,8 +8,8 @@ public class UserEntity {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    @Column(name = "user_id")
-    private long user_id;
+    @Column(name = "userId")
+    private long userId;
 
     @Basic
     @Column(name="username")
@@ -31,12 +31,12 @@ public class UserEntity {
     @Column(name="name")
     private String name;
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

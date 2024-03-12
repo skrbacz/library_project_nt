@@ -13,16 +13,16 @@ public class ReviewEntity {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    @Column(name = "review_id")
-    private long review_id;
+    @Column(name = "reviewId")
+    private long reviewId;
 
     @OneToMany
-    @JoinColumn(name= "user_id")
-    private List<UserEntity> user_id;
+    @JoinColumn(name= "userId")
+    private List<UserEntity> userId;
 
     @OneToMany
-    @JoinColumn(name= "book_id")
-    private List<BookEntity> book_id;
+    @JoinColumn(name= "bookId")
+    private List<BookEntity> bookId;
 
     @Basic
     @Column(name="rating")
@@ -33,31 +33,31 @@ public class ReviewEntity {
     private String commment;
 
     @Basic
-    @Column(name="review_date")
-    private DateFormat review_date;
+    @Column(name="reviewDate")
+    private DateFormat reviewDate;
 
-    public long getReview_id() {
-        return review_id;
+    public long getReviewId() {
+        return reviewId;
     }
 
-    public void setReview_id(long review_id) {
-        this.review_id = review_id;
+    public void setReviewId(long reviewId) {
+        this.reviewId = reviewId;
     }
 
-    public List<UserEntity> getUser_id() {
-        return user_id;
+    public List<UserEntity> getUserId() {
+        return userId;
     }
 
-    public void setUser_id(List<UserEntity> user_id) {
-        this.user_id = user_id;
+    public void setUserId(List<UserEntity> userId) {
+        this.userId = userId;
     }
 
-    public List<BookEntity> getBook_id() {
-        return book_id;
+    public List<BookEntity> getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(List<BookEntity> book_id) {
-        this.book_id = book_id;
+    public void setBookId(List<BookEntity> bookId) {
+        this.bookId = bookId;
     }
 
     public int getRating() {
@@ -76,11 +76,11 @@ public class ReviewEntity {
         this.commment = commment;
     }
 
-    public DateFormat getReview_date() {
-        return review_date;
+    public DateFormat getReviewDate() {
+        return reviewDate;
     }
 
-    public void setReview_date(DateFormat review_date) {
-        this.review_date = review_date;
+    public void setReviewDate(DateFormat reviewDate) {
+        this.reviewDate = reviewDate;
     }
 }

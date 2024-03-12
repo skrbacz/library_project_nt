@@ -4,13 +4,17 @@ import com.projectnt.book.BookEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="books_details",schema = "library")
+@Table(name="booksDetails",schema = "library")
 public class BookDetailsEntity {
 
-    @OneToOne
     @Id
-    @JoinColumn(name="book_id")
-    private BookEntity book_id;
+    @Column(name="bookId")
+    private long bookId;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name="bookId")
+    private BookEntity book;
 
     @Basic
     @Column(name="genre")
@@ -21,15 +25,23 @@ public class BookDetailsEntity {
     private String summary;
 
     @Basic
-    @Column(name= "cover_image_url")
-    private String cover_image_url;
+    @Column(name= "coverImageUrl")
+    private String coverImageUrl;
 
-    public BookEntity getBook_id() {
-        return book_id;
+    public long getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(BookEntity book_id) {
-        this.book_id = book_id;
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
+
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
     public String getGenre() {
@@ -40,19 +52,19 @@ public class BookDetailsEntity {
         this.genre = genre;
     }
 
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
     public String getSummary() {
         return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public String getCover_image_url() {
-        return cover_image_url;
-    }
-
-    public void setCover_image_url(String cover_image_url) {
-        this.cover_image_url = cover_image_url;
     }
 }

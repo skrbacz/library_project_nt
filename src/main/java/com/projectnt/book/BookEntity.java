@@ -8,8 +8,8 @@ public class BookEntity {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    @Column(name = "book_id")
-    private long book_id;
+    @Column(name = "bookId")
+    private long bookId;
     @Basic
     @Column(name="isbn")
     private String isbn;
@@ -29,12 +29,12 @@ public class BookEntity {
     @Column(name="available_books")
     private int availableBooks;
 
-    public long getBook_id() {
-        return book_id;
+    public long getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(long book_id) {
-        this.book_id = book_id;
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 
     public String getIsbn() {

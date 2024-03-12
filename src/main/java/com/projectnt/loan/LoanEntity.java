@@ -13,35 +13,35 @@ public class LoanEntity {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    @Column(name= "loan_id")
-    private long loan_id;
+    @Column(name= "loanId")
+    private long loanId;
 
     @OneToMany
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "bookId")
     private List<BookEntity> book;
 
     @OneToMany
-    @JoinColumn(name= "user_id")
-    private List<UserEntity> user_id;
+    @JoinColumn(name= "userId")
+    private List<UserEntity> userId;
 
     @Basic
-    @Column(name="loan_date")
-    private DateFormat loan_date;
+    @Column(name="loanDate")
+    private DateFormat loanDate;
 
     @Basic
-    @Column(name= "due_date")
-    private DateFormat due_date;
+    @Column(name= "dueDate")
+    private DateFormat dueDate;
 
     @Basic
-    @Column(name="retun_date")
-    private DateFormat retun_date;
+    @Column(name="returnDate")
+    private DateFormat returnDate;
 
-    public long getLoan_id() {
-        return loan_id;
+    public long getLoanId() {
+        return loanId;
     }
 
-    public void setLoan_id(long loan_id) {
-        this.loan_id = loan_id;
+    public void setLoanId(long loanId) {
+        this.loanId = loanId;
     }
 
     public List<BookEntity> getBook() {
@@ -52,35 +52,35 @@ public class LoanEntity {
         this.book = book;
     }
 
-    public List<UserEntity> getUser_id() {
-        return user_id;
+    public List<UserEntity> getUserId() {
+        return userId;
     }
 
-    public void setUser_id(List<UserEntity> user_id) {
-        this.user_id = user_id;
+    public void setUserId(List<UserEntity> userId) {
+        this.userId = userId;
     }
 
-    public DateFormat getLoan_date() {
-        return loan_date;
+    public DateFormat getLoanDate() {
+        return loanDate;
     }
 
-    public void setLoan_date(DateFormat loan_date) {
-        this.loan_date = loan_date;
+    public void setLoanDate(DateFormat loanDate) {
+        this.loanDate = loanDate;
     }
 
-    public DateFormat getDue_date() {
-        return due_date;
+    public DateFormat getDueDate() {
+        return dueDate;
     }
 
-    public void setDue_date(DateFormat due_date) {
-        this.due_date = due_date;
+    public void setDueDate(DateFormat dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public DateFormat getRetun_date() {
-        return retun_date;
+    public DateFormat getReturnDate() {
+        return returnDate;
     }
 
-    public void setRetun_date(DateFormat retun_date) {
-        this.retun_date = retun_date;
+    public void setReturnDate(DateFormat returnDate) {
+        this.returnDate = returnDate;
     }
 }
