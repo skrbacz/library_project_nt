@@ -1,5 +1,8 @@
 package com.projectnt.book;
 
+import com.projectnt.book.dto.CreateBookDto;
+import com.projectnt.book.dto.CreateBookResponseDto;
+import com.projectnt.book.dto.GetBookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +22,17 @@ public class BookController {
     }
 
     @GetMapping()
-    public List<BookEntity> getAllBooks(){
+    public List<GetBookDto> getAllBooks(){
         return bookService.getAll();
     }
 
     @GetMapping("/{book_id}")
-    public BookEntity getOne(@PathVariable long book_id){
+    public GetBookDto getOne(@PathVariable long book_id){
         return bookService.getOne(book_id);
     }
 
     @PostMapping
-    public ResponseEntity<BookEntity> create(@RequestBody BookEntity book){
+    public ResponseEntity<CreateBookResponseDto> create(@RequestBody CreateBookDto book){
         var newBook= bookService.create(book);
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }
@@ -38,6 +41,5 @@ public class BookController {
     public ResponseEntity<Void> delete(@PathVariable long book_id){
         bookService.delete(book_id);
         return ResponseEntity.noContent().build();
-
     }
 }

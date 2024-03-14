@@ -1,9 +1,16 @@
 package com.projectnt.book_details;
 
+import com.projectnt.book.dto.CreateBookResponseDto;
+import com.projectnt.book.dto.GetBookDto;
+import com.projectnt.book_details.dto.CreateBookDetailsDto;
+import com.projectnt.book_details.dto.CreateBookDetailsResponseDto;
+import com.projectnt.book_details.dto.GetBookDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BookDetailsService {
 
@@ -13,15 +20,29 @@ public class BookDetailsService {
     public BookDetailsService(BookDetailsRepository bookDetailsRepository){
         this.bookDetailsRepository= bookDetailsRepository;
     }
-    public List<BookDetailsEntity> getAll(){
-        return bookDetailsRepository.findAll();
+    public List<GetBookDetailsDto> getAll(){
+        var booksDetails =bookDetailsRepository.findAll();
+        return booksDetails.stream().map((bookDetails)->new GetBookDetailsDto(bookDetails.getBookId(),bookDetails.getBook(),bookDetails.getGenre(), bookDetails.getSummary(),bookDetails.getCoverImageUrl())).collect(Collectors.toList());
     }
 
-    public BookDetailsEntity getOne(long book_id){
-        return bookDetailsRepository.findById(book_id).orElseThrow(()-> new RuntimeException("Book details not found"));
+    public GetBookDetailsDto getOne(long book_id){
+        var bookDetails= bookDetailsRepository.findById(book_id).orElseThrow(()-> new RuntimeException("Book details not found"));
+        return new GetBookDetailsDto(bookDetails.getBookId(),bookDetails.getBook(),bookDetails.getGenre(), bookDetails.getSummary(),bookDetails.getCoverImageUrl());
     }
 
-    public BookDetailsEntity create(BookDetailsEntity bookDetails) {return bookDetailsRepository.save(bookDetails);}
+    public CreateBookDetailsResponseDto create(CreateBookDetailsDto bookDetails) {
+
+        var bookDetailsEntity= new BookDetailsEntity();
+        bookDetailsEntity.setBook(bookDetails.getBook());
+        bookDetailsEntity.setGenre(bookDetails.getGenre());
+        bookDetailsEntity.setSummary(bookDetails.getSummary());
+        bookDetailsEntity.setCoverImageUrl(bookDetails.getCoverImageUrl());
+
+        var newBookDetails= bookDetailsRepository.save(bookDetailsEntity);
+
+        return new CreateBookDetailsResponseDto(newBookDetails.getBookId(),newBookDetails.getBook(),newBookDetails.getGenre(),newBookDetails.getSummary(),newBookDetails.getCoverImageUrl());
+
+    }
 
     public void delete(long book_id){
         if(!bookDetailsRepository.existsById(book_id)){

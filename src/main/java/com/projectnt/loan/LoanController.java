@@ -1,5 +1,9 @@
 package com.projectnt.loan;
 
+import com.projectnt.book.dto.GetBookDto;
+import com.projectnt.loan.dto.CreateLoanDto;
+import com.projectnt.loan.dto.CreateLoanResponseDto;
+import com.projectnt.loan.dto.GetLoanDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +21,15 @@ public class LoanController {
     public LoanController (LoanService loanService){this.loanService= loanService;}
 
     @GetMapping
-    public List<LoanEntity> getAllLoans(){return loanService.getAll();}
+    public List<GetLoanDto> getAllLoans(){return loanService.getAll();}
 
     @GetMapping("/{loan_id}")
-    public LoanEntity getOne(@PathVariable long loan_id){
+    public GetLoanDto getOne(@PathVariable long loan_id){
         return loanService.getOne(loan_id);
     }
 
     @PostMapping
-    public ResponseEntity<LoanEntity> create(@RequestBody LoanEntity loan){
+    public ResponseEntity<CreateLoanResponseDto> create(@RequestBody CreateLoanDto loan){
         var newLoan= loanService.create(loan);
         return new ResponseEntity<>(newLoan, HttpStatus.CREATED);
     }

@@ -1,5 +1,9 @@
 package com.projectnt.book_details;
 
+import com.projectnt.book.dto.CreateBookResponseDto;
+import com.projectnt.book_details.dto.CreateBookDetailsDto;
+import com.projectnt.book_details.dto.CreateBookDetailsResponseDto;
+import com.projectnt.book_details.dto.GetBookDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +23,16 @@ public class BookDetailsController {
     }
 
     @GetMapping
-    public List<BookDetailsEntity> getAllBooksReviews(){
+    public List<GetBookDetailsDto> getAllBooksReviews(){
         return bookDetailsService.getAll();
     }
     @GetMapping("/{book_id}")
-    public BookDetailsEntity getOne(@PathVariable long book_id){
+    public GetBookDetailsDto getOne(@PathVariable long book_id){
         return bookDetailsService.getOne(book_id);
     }
 
     @PostMapping
-    public ResponseEntity<BookDetailsEntity> create(@RequestBody BookDetailsEntity bookDetails){
+    public ResponseEntity<CreateBookDetailsResponseDto> create(@RequestBody CreateBookDetailsDto bookDetails){
         var newBookDetails= bookDetailsService.create(bookDetails);
         return new ResponseEntity<>(newBookDetails, HttpStatus.CREATED);
     }
