@@ -7,7 +7,7 @@ public class CreateBookResponseDto {
     private long bookId;
     private String isbn;
     private String title;
-    private String author;
+    private String autor;
     private String publisher;
     private int yearPublished;
     private int availableCopies;
