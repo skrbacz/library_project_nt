@@ -1,5 +1,6 @@
 package com.projectnt.user;
 
+import com.projectnt.jjwt.AuthEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,6 +31,10 @@ public class UserEntity {
     @Basic
     @Column(name="name")
     private String name;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private AuthEntity auth;
+
 
     public long getUserId() {
         return userId;
