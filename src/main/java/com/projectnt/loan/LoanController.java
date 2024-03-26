@@ -7,12 +7,14 @@ import com.projectnt.loan.dto.GetLoanDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/loans")
+@PreAuthorize("hasRole('ADMIN')")
 public class LoanController {
 
     private final LoanService loanService;
@@ -24,8 +26,9 @@ public class LoanController {
     public List<GetLoanDto> getAllLoans(){return loanService.getAll();}
 
     @GetMapping("/{loan_id}")
-    public GetLoanDto getOne(@PathVariable long loan_id){
-        return loanService.getOne(loan_id);
+    public ResponseEntity<GetLoanDto> getOne(@PathVariable long loan_id){
+       GetLoanDto dto= loanService.getOne(loan_id);
+       return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
     @PostMapping

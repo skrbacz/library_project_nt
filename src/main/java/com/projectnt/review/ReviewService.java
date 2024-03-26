@@ -35,7 +35,7 @@ public class ReviewService {
        reviewEntity.setBookId(review.getBookId());
        reviewEntity.setUserId(review.getUserId());
        reviewEntity.setRating(review.getRating());
-       reviewEntity.setCommment(review.getCommment());
+       reviewEntity.setCommment(review.getComment());
 
        var newReview = reviewRepository.save(reviewEntity);
        return new CreateReviewResponseDto(newReview.getReviewId(), newReview.getBookId(), newReview.getUserId(),newReview.getRating(),newReview.getCommment(),newReview.getReviewDate());

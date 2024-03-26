@@ -1,11 +1,17 @@
 package com.projectnt.book_details.dto;
 
 import com.projectnt.book.BookEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateBookDetailsDto {
+    @NotNull(message = "Book is required")
     private BookEntity book;
+    @NotBlank(message = "Genre is required")
     private String genre;
+    @NotBlank(message = "Summary is required")
     private String summary;
+    @NotBlank(message = "Cover image is required")
     private String coverImageUrl;
 
     public CreateBookDetailsDto(BookEntity book, String genre, String summary, String coverImageUrl) {

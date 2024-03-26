@@ -2,21 +2,29 @@ package com.projectnt.review.dto;
 
 import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.text.DateFormat;
+import java.util.Date;
 
 public class CreateReviewDto {
+    @NotNull(message = "Book id is required")
     public BookEntity bookId;
+    @NotNull(message = "User id is required")
     public UserEntity userId;
+    @NotNull(message = "Rating is required")
     private int rating;
-    private String commment;
-    private DateFormat reviewDate;
+    @NotBlank(message = "Comment is required")
+    private String comment;
+    @NotNull(message = "Review date is required")
+    private Date reviewDate;
 
-    public CreateReviewDto(BookEntity bookId, UserEntity userId, int rating, String commment, DateFormat reviewDate) {
+    public CreateReviewDto(BookEntity bookId, UserEntity userId, int rating, String comment, Date reviewDate) {
         this.bookId = bookId;
         this.userId = userId;
         this.rating = rating;
-        this.commment = commment;
+        this.comment = comment;
         this.reviewDate = reviewDate;
     }
 
@@ -47,19 +55,19 @@ public class CreateReviewDto {
         this.rating = rating;
     }
 
-    public String getCommment() {
-        return commment;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCommment(String commment) {
-        this.commment = commment;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public DateFormat getReviewDate() {
+    public Date getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(DateFormat reviewDate) {
+    public void setReviewDate(Date reviewDate) {
         this.reviewDate = reviewDate;
     }
 }

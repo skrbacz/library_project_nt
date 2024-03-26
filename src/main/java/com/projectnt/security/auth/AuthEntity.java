@@ -1,4 +1,4 @@
-package com.projectnt.jjwt;
+package com.projectnt.security.auth;
 
 
 import com.projectnt.common_types.UserRole;

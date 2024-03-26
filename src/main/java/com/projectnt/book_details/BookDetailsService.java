@@ -5,10 +5,12 @@ import com.projectnt.book.dto.GetBookDto;
 import com.projectnt.book_details.dto.CreateBookDetailsDto;
 import com.projectnt.book_details.dto.CreateBookDetailsResponseDto;
 import com.projectnt.book_details.dto.GetBookDetailsDto;
+import com.projectnt.book_details.error.BookDetailsAlreadyExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +33,12 @@ public class BookDetailsService {
     }
 
     public CreateBookDetailsResponseDto create(CreateBookDetailsDto bookDetails) {
+
+        Optional<BookDetailsEntity> existingBookDetails= bookDetailsRepository.findByBook(bookDetails.getBook());
+
+        if(existingBookDetails.isPresent()){
+            throw BookDetailsAlreadyExist.create(bookDetails.getBook());
+        }
 
         var bookDetailsEntity= new BookDetailsEntity();
         bookDetailsEntity.setBook(bookDetails.getBook());

@@ -1,50 +1,63 @@
-package com.projectnt.jjwt;
+package com.projectnt.security.auth;
 
-import com.projectnt.common_types.UserRole;
 import com.projectnt.register_login.dto.LoginDto;
 import com.projectnt.register_login.dto.LoginResponseDto;
 import com.projectnt.register_login.dto.RegisterDto;
 import com.projectnt.register_login.dto.RegisterResponseDto;
+import com.projectnt.security.auth.error.UserAlreadyExists;
+import com.projectnt.security.jwt.JwtService;
 import com.projectnt.user.UserEntity;
 import com.projectnt.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
+
+    private final PasswordEncoder passwordEncoder;
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
-
     private final JwtService jwtService;
 
     @Autowired
-    public AuthService(AuthRepository authRepository, UserRepository userRepository, JwtService jwtService) {
+    public AuthService(PasswordEncoder passwordEncoder, AuthRepository authRepository, UserRepository userRepository, JwtService jwtService) {
+        this.passwordEncoder = passwordEncoder;
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
     }
 
+    @Transactional
     public RegisterResponseDto register(RegisterDto dto){
+        Optional<AuthEntity> existingAuth= authRepository.findByUsername(dto.getUsername());
+
+        if (existingAuth.isPresent()){
+            throw UserAlreadyExists.create(dto.getUsername());
+        }
+
         UserEntity userEntity= new UserEntity();
         userEntity.setEmail(dto.getEmail());
-        UserEntity createdUser= userRepository.save(userEntity);
+        userRepository.save(userEntity);
 
         AuthEntity authEntity= new AuthEntity();
-        authEntity.setPassword(dto.getPassword());
+        String hashPassword= passwordEncoder.encode(dto.getPassword());
+        authEntity.setPassword(hashPassword);
         authEntity.setUsername(dto.getUsername());
         authEntity.setRole(dto.getRole());
-        authEntity.setUser(createdUser);
+        authEntity.setUser(userEntity);
+        authRepository.save(authEntity);
 
-        AuthEntity createdAuth= authRepository.save(authEntity);
-
-        return new RegisterResponseDto(createdAuth.getUsername(),createdAuth.getRole());
+        return new RegisterResponseDto(authEntity.getUsername(), userEntity.getUserId(), authEntity.getRole());
     }
 
     public LoginResponseDto login(LoginDto dto){
         AuthEntity authEntity=authRepository.findByUsername(dto.getUsername()).orElseThrow(RuntimeException::new);
-        if(!authEntity.getPassword().equals(dto.getPassword())){
-            throw new RuntimeException("Password or username doesn't match");
+        if(!passwordEncoder.matches(dto.getPassword(),authEntity.getPassword())){
+            throw new RuntimeException("Password or username don't match");
         }
        String token=  jwtService.generateToken(authEntity);
 

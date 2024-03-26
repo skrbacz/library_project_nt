@@ -4,9 +4,7 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
-import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="loans", schema = "library")
@@ -17,13 +15,13 @@ public class LoanEntity {
     @Column(name= "loanId")
     private long loanId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookId", referencedColumnName = "bookId", nullable = false)
-    public BookEntity bookId;
+    public BookEntity book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
-    public UserEntity userId;
+    public UserEntity user;
 
     @Column(name="loanDate")
     private Date loanDate;
@@ -44,20 +42,20 @@ public class LoanEntity {
         this.loanId = loanId;
     }
 
-    public BookEntity getBookId() {
-        return bookId;
+    public BookEntity getBook() {
+        return book;
     }
 
-    public void setBookId(BookEntity bookId) {
-        this.bookId = bookId;
+    public void setBook(BookEntity bookId) {
+        this.book = bookId;
     }
 
-    public UserEntity getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
+    public void setUser(UserEntity userId) {
+        this.user = userId;
     }
 
     public Date getLoanDate() {

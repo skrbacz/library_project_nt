@@ -3,10 +3,12 @@ package com.projectnt.book;
 import com.projectnt.book.dto.CreateBookDto;
 import com.projectnt.book.dto.CreateBookResponseDto;
 import com.projectnt.book.dto.GetBookDto;
+import com.projectnt.book.error.BookAlreadyExists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,11 @@ public class BookService {
     }
 
     public CreateBookResponseDto create(CreateBookDto book){
+        Optional<BookEntity> existingBook= bookRepository.findByIsbn(book.getIsbn());
+        if(existingBook.isPresent()){
+            throw BookAlreadyExists.createWithIsbn(book.getIsbn());
+        }
+
         var bookEntity= new BookEntity();
         bookEntity.setAuthor(book.getAuthor());
         bookEntity.setTitle(book.getTitle());

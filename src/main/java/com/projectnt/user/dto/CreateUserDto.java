@@ -1,17 +1,20 @@
 package com.projectnt.user.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class CreateUserDto {
 
-    private String username;
-    private String password;
-    private String role;
+    @NotBlank(message = "Last name is required")
+    private String lastName;
+    @NotBlank(message = "Email is required")
+    @Email
     private String email;
+    @NotBlank(message = "Name is required")
     private String name;
 
-    public CreateUserDto(String username, String password, String role, String email, String name) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public CreateUserDto(String username, String email, String name) {
+        this.lastName = username;
         this.email = email;
         this.name = name;
     }
@@ -19,28 +22,12 @@ public class CreateUserDto {
     public CreateUserDto() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

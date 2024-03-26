@@ -3,17 +3,13 @@ package com.projectnt.user.dto;
 public class CreateUserResponseDto {
 
     private long userId;
-    private String username;
-    private String password;
-    private String role;
+    private String lastName;
     private String email;
     private String name;
 
-    public CreateUserResponseDto(long userId, String username, String password, String role, String email, String name) {
+    public CreateUserResponseDto(long userId, String lastName, String email, String name) {
         this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+        this.lastName = lastName;
         this.email = email;
         this.name = name;
     }
@@ -29,28 +25,12 @@ public class CreateUserResponseDto {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

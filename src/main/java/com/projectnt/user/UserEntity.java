@@ -1,6 +1,6 @@
 package com.projectnt.user;
 
-import com.projectnt.jjwt.AuthEntity;
+import com.projectnt.security.auth.AuthEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,19 +13,11 @@ public class UserEntity {
     private long userId;
 
     @Basic
-    @Column(name="username")
-    private String username;
+    @Column(name="lastName")
+    private String lastName;
 
     @Basic
-    @Column(name="password")
-    private String password;
-
-    @Basic
-    @Column(name="role")
-    private String role;
-
-    @Basic
-    @Column(name="email")
+    @Column(name="email",nullable = false)
     private String email;
 
     @Basic
@@ -44,28 +36,12 @@ public class UserEntity {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setLastName(String username) {
+        this.lastName = username;
     }
 
     public String getEmail() {
