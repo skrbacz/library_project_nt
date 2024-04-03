@@ -1,10 +1,10 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.register_login.dto.LoginDto;
-import com.projectnt.register_login.dto.LoginResponseDto;
-import com.projectnt.register_login.dto.RegisterDto;
-import com.projectnt.register_login.dto.RegisterResponseDto;
-import com.projectnt.security.auth.error.UserAlreadyExists;
+import com.projectnt.others.login_register_dto.LoginDto;
+import com.projectnt.others.login_register_dto.LoginResponseDto;
+import com.projectnt.others.login_register_dto.RegisterDto;
+import com.projectnt.others.login_register_dto.RegisterResponseDto;
+import com.projectnt.user.error.UserAlreadyExists;
 import com.projectnt.security.jwt.JwtService;
 import com.projectnt.user.UserEntity;
 import com.projectnt.user.UserRepository;
@@ -34,9 +34,12 @@ public class AuthService {
     @Transactional
     public RegisterResponseDto register(RegisterDto dto){
         Optional<AuthEntity> existingAuth= authRepository.findByUsername(dto.getUsername());
+        Optional<UserEntity> existingEmail= userRepository.findByEmail(dto.getEmail());
 
         if (existingAuth.isPresent()){
-            throw UserAlreadyExists.create(dto.getUsername());
+            throw UserAlreadyExists.createByUsermane(dto.getUsername());
+        }else if (existingEmail.isPresent()){
+            throw UserAlreadyExists.createByEmail(dto.getEmail());
         }
 
         UserEntity userEntity= new UserEntity();

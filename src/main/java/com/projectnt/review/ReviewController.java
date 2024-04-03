@@ -1,20 +1,20 @@
 package com.projectnt.review;
 
-import com.projectnt.book_details.BookDetailsService;
-import com.projectnt.review.dto.CreateReviewDto;
-import com.projectnt.review.dto.CreateReviewResponseDto;
-import com.projectnt.review.dto.GetReviewDto;
+import com.projectnt.review.dto.*;
+import com.projectnt.user.dto.PatchUserDto;
+import com.projectnt.user.dto.PatchUserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/reviews")
-@PreAuthorize("hasRole('ADMIN')or hasRole('READER')")
+@PreAuthorize("isAuthenticated()")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -25,20 +25,30 @@ public class ReviewController {
     }
 
     @GetMapping
-    public List<GetReviewDto> getAllReviews(){
-        return reviewService.getAll();
+    public ResponseEntity<GetReviewPagesDto> getAllReviews(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        GetReviewPagesDto dto = reviewService.getAll(page,size);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
     @GetMapping("/{review_id}")
-    public GetReviewDto getOne(@PathVariable long review_id){
-        return reviewService.getOne(review_id);
+    public ResponseEntity<GetReviewDto> getOne(@PathVariable long review_id){
+        GetReviewDto dto= reviewService.getOneById(review_id);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
+    @PatchMapping("/{review_id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<PatchReviewResponseDto> update(@PathVariable long review_id, @RequestBody PatchReviewDto dto){
+        PatchReviewResponseDto responseDto= reviewService.update(review_id, dto);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CreateReviewResponseDto> create(@RequestBody CreateReviewDto review){
+    public ResponseEntity<CreateReviewResponseDto> create(@RequestBody @Validated CreateReviewDto review){
         var newReview= reviewService.create(review);
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/{review_id}")
     public ResponseEntity<Void> delete(@PathVariable long review_id){

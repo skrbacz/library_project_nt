@@ -1,6 +1,9 @@
 package com.projectnt.book;
 
+import com.projectnt.loan.LoanEntity;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name= "books", schema= "library")
@@ -28,6 +31,17 @@ public class BookEntity {
     @Basic
     @Column(name="availableBooks")
     private int availableBooks;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<LoanEntity> loans;
+
+    public List<LoanEntity> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanEntity> loans) {
+        this.loans = loans;
+    }
 
     public long getBookId() {
         return bookId;

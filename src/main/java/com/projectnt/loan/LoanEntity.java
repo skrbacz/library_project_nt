@@ -23,11 +23,11 @@ public class LoanEntity {
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
     public UserEntity user;
 
-    @Column(name="loanDate")
+    @Column(name="loanDate",nullable = false)
     private Date loanDate;
 
     @Basic
-    @Column(name= "dueDate")
+    @Column(name= "dueDate",nullable = false)
     private Date dueDate;
 
     @Basic

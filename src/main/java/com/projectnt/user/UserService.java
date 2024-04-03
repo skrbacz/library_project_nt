@@ -1,10 +1,19 @@
 package com.projectnt.user;
 
-import com.projectnt.user.dto.CreateUserDto;
-import com.projectnt.user.dto.CreateUserResponseDto;
-import com.projectnt.user.dto.GetUserDto;
+import com.projectnt.security.auth.AuthEntity;
+import com.projectnt.security.auth.AuthRepository;
+import com.projectnt.security.auth.OwnershipService;
+import com.projectnt.user.dto.*;
 import com.projectnt.user.error.EmailAlreadyUsed;
+import com.projectnt.user.error.UserDoesntExist;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,30 +21,38 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService extends OwnershipService {
 
     private final UserRepository userRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuthRepository authRepository) {
+        super(authRepository);
         this.userRepository = userRepository;
     }
 
-    public List<GetUserDto> getAll(){
-        var users= userRepository.findAll();
-        return users.stream().map((user)-> new GetUserDto(user.getUserId(),user.getLastName(),user.getEmail(),user.getName())).collect(Collectors.toList());
+    public GetUserPagesDto getAll(int page, int size){
+        Page<UserEntity> usersPage;
+        Pageable pageable= PageRequest.of(page,size);
+
+        usersPage= userRepository.findAll(pageable);
+        List<GetUserDto> userDto= usersPage.getContent().stream().map(this::mapUser).toList();
+        return new GetUserPagesDto(userDto,usersPage.getNumber(),usersPage.getTotalElements(),usersPage.getTotalPages(),usersPage.hasNext());
     }
 
-    public GetUserDto getOne(long user_id){
+    public GetUserDto getOneById(long user_id){
         var user= userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("User not found"));
+        return mapUser(user);
+    }
+
+    public GetUserDto mapUser(UserEntity user){
         return new GetUserDto(user.getUserId(),user.getLastName(),user.getEmail(),user.getName());
     }
 
     public CreateUserResponseDto create(CreateUserDto user){
-        Optional<UserEntity> existingEmail= userRepository.findAllByEmail(user.getEmail());
+        Optional<UserEntity> existingEmail= userRepository.findByEmail(user.getEmail());
 
         if(existingEmail.isPresent()){
-            throw EmailAlreadyUsed.create(user.getEmail());
+            throw EmailAlreadyUsed.createWithEmail(user.getEmail());
         }
 
         var userEntity= new UserEntity();
@@ -50,9 +67,28 @@ public class UserService {
 
     public void delete(long user_id){
         if(!userRepository.existsById(user_id)){
-            throw new RuntimeException();
+            throw UserDoesntExist.createWithId(user_id);
         }
         userRepository.deleteById(user_id);
+    }
+
+    public GetUserDto getUserByUsername(String username){
+        AuthEntity auth = authRepository.findByUsername(username).orElseThrow(() -> UserDoesntExist.createWithUsername(username));
+        UserEntity user = auth.getUser();
+
+        return new GetUserDto(user.getUserId(),user.getEmail(),user.getName(),user.getLastName());
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,#userId)")
+    public PatchUserResponseDto update(long userId, PatchUserDto dto){
+        UserEntity user= userRepository.findById(userId).orElseThrow(()-> UserDoesntExist.createWithId(userId));
+
+        dto.getName().ifPresent(user::setName);
+        dto.getLastname().ifPresent(user::setLastName);
+        dto.getEmail().ifPresent(user::setEmail);
+
+        userRepository.save(user);
+        return new PatchUserResponseDto(user.getUserId(),user.getName(),user.getLastName(), user.getEmail());
     }
 
 }

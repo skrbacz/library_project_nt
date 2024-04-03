@@ -1,7 +1,7 @@
 package com.projectnt.security.auth;
 
 
-import com.projectnt.common_types.UserRole;
+import com.projectnt.others.common_types.UserRole;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 

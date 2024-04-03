@@ -1,15 +1,16 @@
 package com.projectnt.user;
 
-import com.projectnt.review.dto.CreateReviewDto;
-import com.projectnt.user.dto.CreateUserDto;
-import com.projectnt.user.dto.CreateUserResponseDto;
-import com.projectnt.user.dto.GetUserDto;
+import com.projectnt.user.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,13 +25,34 @@ public class UserController {
     }
 
     @GetMapping
-    public List<GetUserDto> getAllUers(){return userService.getAll();}
+    public ResponseEntity<GetUserPagesDto> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        GetUserPagesDto dto = userService.getAll(page,size);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
 
     @GetMapping("/{user_id}")
-    public GetUserDto getOne(@PathVariable long user_id){return userService.getOne(user_id);}
+    public ResponseEntity<GetUserDto> getOne(@PathVariable long user_id){
+        GetUserDto dto= userService.getOneById(user_id);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<GetUserDto> getMe(Principal principal){
+        String username= principal.getName();
+        GetUserDto dto = userService.getUserByUsername(username);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
+    @PatchMapping("/{user_id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<PatchUserResponseDto> update(@PathVariable long user_id, @RequestBody PatchUserDto dto){
+        PatchUserResponseDto responseDto= userService.update(user_id, dto);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+    }
 
     @PostMapping
-    public ResponseEntity<CreateUserResponseDto> create(@RequestBody CreateUserDto user){
+    public ResponseEntity<CreateUserResponseDto> create(@RequestBody @Validated CreateUserDto user){
         var newUser= userService.create(user);
         return new ResponseEntity<>(newUser,HttpStatus.CREATED);
     }
@@ -40,4 +62,5 @@ public class UserController {
         userService.delete(user_id);
         return ResponseEntity.noContent().build();
     }
+
 }

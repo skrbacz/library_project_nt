@@ -13,12 +13,12 @@ public class CreateBookDto {
     @NotBlank(message = "Publisher is required")
     private String publisher;
     @NotNull(message = "Year of publication is required")
-    private int yearPublished;
+    private Integer yearPublished;
     @NotNull(message = "Amount of available copies is required")
-    private int availableCopies;
+    private Integer availableCopies;
 
 
-    public CreateBookDto(String isbn, String title, String author, String publisher, int yearPublished, int availableCopies) {
+    public CreateBookDto(String isbn, String title, String author, String publisher, Integer yearPublished, Integer availableCopies) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -29,7 +29,6 @@ public class CreateBookDto {
 
     public CreateBookDto() {
     }
-
 
     public String getIsbn() {
         return isbn;
@@ -63,19 +62,19 @@ public class CreateBookDto {
         this.publisher = publisher;
     }
 
-    public int getYearPublished() {
+    public Integer getYearPublished() {
         return yearPublished;
     }
 
-    public void setYearPublished(int yearPublished) {
+    public void setYearPublished(Integer yearPublished) {
         this.yearPublished = yearPublished;
     }
 
-    public int getAvailableCopies() {
+    public Integer getAvailableCopies() {
         return availableCopies;
     }
 
-    public void setAvailableCopies(int availableCopies) {
+    public void setAvailableCopies(Integer availableCopies) {
         this.availableCopies = availableCopies;
     }
 }

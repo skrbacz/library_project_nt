@@ -1,6 +1,6 @@
 package com.projectnt.security.jwt;
 
-import com.projectnt.common_types.UserRole;
+import com.projectnt.others.common_types.UserRole;
 import com.projectnt.security.auth.AuthEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

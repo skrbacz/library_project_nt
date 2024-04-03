@@ -4,9 +4,7 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
-import java.awt.print.Book;
-import java.text.DateFormat;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name="reviews", schema = "library")
@@ -19,23 +17,23 @@ public class ReviewEntity {
 
     @ManyToOne
     @JoinColumn(name = "bookId", referencedColumnName = "bookId",nullable = false)
-    public BookEntity bookId;
+    public BookEntity book;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName= "userId", nullable = false)
-    public UserEntity userId;
+    public UserEntity user;
 
     @Basic
     @Column(name="rating")
     private int rating;
 
     @Basic
-    @Column(name="commment")
-    private String commment;
+    @Column(name="comment")
+    private String comment;
 
     @Basic
     @Column(name="reviewDate")
-    private DateFormat reviewDate;
+    private Date reviewDate;
 
     public long getReviewId() {
         return reviewId;
@@ -45,20 +43,20 @@ public class ReviewEntity {
         this.reviewId = reviewId;
     }
 
-    public BookEntity getBookId() {
-        return bookId;
+    public BookEntity getBook() {
+        return book;
     }
 
-    public void setBookId(BookEntity bookId) {
-        this.bookId = bookId;
+    public void setBook(BookEntity bookId) {
+        this.book = bookId;
     }
 
-    public UserEntity getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
+    public void setUser(UserEntity userId) {
+        this.user = userId;
     }
 
     public int getRating() {
@@ -69,19 +67,19 @@ public class ReviewEntity {
         this.rating = rating;
     }
 
-    public String getCommment() {
-        return commment;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCommment(String commment) {
-        this.commment = commment;
+    public void setComment(String commment) {
+        this.comment = commment;
     }
 
-    public DateFormat getReviewDate() {
+    public Date getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(DateFormat reviewDate) {
+    public void setReviewDate(Date reviewDate) {
         this.reviewDate = reviewDate;
     }
 }

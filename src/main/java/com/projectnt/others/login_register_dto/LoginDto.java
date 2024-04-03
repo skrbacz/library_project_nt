@@ -1,4 +1,4 @@
-package com.projectnt.register_login.dto;
+package com.projectnt.others.login_register_dto;
 
 import jakarta.validation.constraints.NotBlank;
 

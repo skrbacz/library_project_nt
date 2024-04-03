@@ -1,6 +1,6 @@
-package com.projectnt.register_login.dto;
+package com.projectnt.others.login_register_dto;
 
-import com.projectnt.common_types.UserRole;
+import com.projectnt.others.common_types.UserRole;
 
 public class RegisterResponseDto {
     private String username;

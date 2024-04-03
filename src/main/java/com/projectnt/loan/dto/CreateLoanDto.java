@@ -9,50 +9,36 @@ import java.util.Date;
 
 public class CreateLoanDto {
 
-    @NotNull(message = "Book is required")
-    public BookEntity book;
-    @NotNull(message = "User is required")
-    public UserEntity user;
-    @NotNull(message = "Loan date is required")
-    private Date loanDate;
-    @NotNull(message = "Due date is required")
+    @NotNull(message = "Book id is required")
+    public Long bookId;
+    @NotNull(message = "User id is required")
+    public Long userId;
+   @NotNull(message = "Due date is required")
     private Date dueDate;
-    @NotNull(message = "Return date is required")
-    private Date returnDate;
 
-    public CreateLoanDto(BookEntity book, UserEntity user, Date loanDate, Date dueDate, Date returnDate) {
-        this.book = book;
-        this.user = user;
-        this.loanDate = loanDate;
+    public CreateLoanDto(Long bookId, Long userId, Date dueDate) {
+        this.bookId = bookId;
+        this.userId = userId;
         this.dueDate = dueDate;
-        this.returnDate = returnDate;
     }
 
     public CreateLoanDto() {
     }
 
-    public BookEntity getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(BookEntity book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public Date getLoanDate() {
-        return loanDate;
-    }
-
-    public void setLoanDate(Date loanDate) {
-        this.loanDate = loanDate;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getDueDate() {
@@ -61,13 +47,5 @@ public class CreateLoanDto {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
     }
 }

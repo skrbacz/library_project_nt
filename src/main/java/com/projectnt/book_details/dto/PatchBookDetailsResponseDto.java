@@ -1,33 +1,24 @@
 package com.projectnt.book_details.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import org.openapitools.jackson.nullable.JsonNullable;
 
-public class CreateBookDetailsDto {
-    @NotNull(message = "Book id is required")
-    private Long bookId;
-    @NotBlank(message = "Genre is required")
+public class PatchBookDetailsResponseDto {
+    private long bookId;
     private String genre;
-    @NotBlank(message = "Summary is required")
     private String summary;
-    @NotBlank(message = "Cover image is required")
     private String coverImageUrl;
 
-    public CreateBookDetailsDto(Long bookId, String genre, String summary, String coverImageUrl) {
+    public PatchBookDetailsResponseDto(long bookId, String genre, String summary, String coverImageUrl) {
         this.bookId = bookId;
         this.genre = genre;
         this.summary = summary;
         this.coverImageUrl = coverImageUrl;
     }
-
-    public CreateBookDetailsDto() {
-    }
-
-    public Long getBookId() {
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 
@@ -55,4 +46,3 @@ public class CreateBookDetailsDto {
         this.coverImageUrl = coverImageUrl;
     }
 }
-

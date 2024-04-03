@@ -4,25 +4,23 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 
 import java.text.DateFormat;
+import java.util.Date;
 
 public class CreateReviewResponseDto {
     private long reviewId;
-    public BookEntity bookId;
-    public UserEntity userId;
+    public long bookId;
+    public long userId;
     private int rating;
-    private String commment;
-    private DateFormat reviewDate;
+    private String comment;
+    private Date reviewDate;
 
-    public CreateReviewResponseDto(long reviewId, BookEntity bookId, UserEntity userId, int rating, String commment, DateFormat reviewDate) {
+    public CreateReviewResponseDto(long reviewId, long bookId, long userId, int rating, String comment, Date reviewDate) {
         this.reviewId = reviewId;
         this.bookId = bookId;
         this.userId = userId;
         this.rating = rating;
-        this.commment = commment;
+        this.comment = comment;
         this.reviewDate = reviewDate;
-    }
-
-    public CreateReviewResponseDto() {
     }
 
     public long getReviewId() {
@@ -33,19 +31,19 @@ public class CreateReviewResponseDto {
         this.reviewId = reviewId;
     }
 
-    public BookEntity getBookId() {
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(BookEntity bookId) {
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 
-    public UserEntity getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(UserEntity userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -57,19 +55,19 @@ public class CreateReviewResponseDto {
         this.rating = rating;
     }
 
-    public String getCommment() {
-        return commment;
+    public String getComment() {
+        return comment;
     }
 
-    public void setCommment(String commment) {
-        this.commment = commment;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public DateFormat getReviewDate() {
+    public Date getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(DateFormat reviewDate) {
+    public void setReviewDate(Date reviewDate) {
         this.reviewDate = reviewDate;
     }
 }

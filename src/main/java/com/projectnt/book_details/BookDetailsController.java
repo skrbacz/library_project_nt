@@ -1,12 +1,11 @@
 package com.projectnt.book_details;
 
-import com.projectnt.book_details.dto.CreateBookDetailsDto;
-import com.projectnt.book_details.dto.CreateBookDetailsResponseDto;
-import com.projectnt.book_details.dto.GetBookDetailsDto;
+import com.projectnt.book_details.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,20 +23,28 @@ public class BookDetailsController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')or hasRole('READER')")
-    public List<GetBookDetailsDto> getAllBooksDetails(){
-        return bookDetailsService.getAll();
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<GetBooksDetailsPagesDto> getAllBooksDetails(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        GetBooksDetailsPagesDto dto=  bookDetailsService.getAll(page,size);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     @GetMapping("/{book_id}")
-    @PreAuthorize("hasRole('ADMIN')or hasRole('READER')")
-
-    public GetBookDetailsDto getOne(@PathVariable long book_id){
-        return bookDetailsService.getOne(book_id);
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<GetBookDetailsDto> getOne(@PathVariable long book_id){
+        GetBookDetailsDto dto = bookDetailsService.getOneByIdBD(book_id);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @PatchMapping("/{book_id}")
+    public ResponseEntity<PatchBookDetailsResponseDto> update(@PathVariable long book_id,@RequestBody PatchBookDetailsDto dto){
+        PatchBookDetailsResponseDto responseDto= bookDetailsService.update(book_id,dto);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+    }
+
+//    TODO: IT SAYS MISSING BODY BUT DEBUGGER SHOWS THAT IT WORKS
     @PostMapping
-    public ResponseEntity<CreateBookDetailsResponseDto> create(@RequestBody CreateBookDetailsDto bookDetails){
-        var newBookDetails= bookDetailsService.create(bookDetails);
+    public ResponseEntity<CreateBookDetailsResponseDto> create(@RequestBody @Validated CreateBookDetailsDto bookDetailsDto){
+        var newBookDetails= bookDetailsService.create(bookDetailsDto);
         return new ResponseEntity<>(newBookDetails, HttpStatus.CREATED);
     }
 

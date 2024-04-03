@@ -1,26 +1,21 @@
 package com.projectnt.review.dto;
 
-import com.projectnt.book.BookEntity;
 import com.projectnt.book.dto.GetBookDto;
-import com.projectnt.user.UserEntity;
-import com.projectnt.user.dto.GetUserDto;
+import org.openapitools.jackson.nullable.JsonNullable;
 
-import java.text.DateFormat;
 import java.util.Date;
 
-public class GetReviewDto {
+public class PatchReviewResponseDto {
 
     private long reviewId;
-    public GetBookDto bookId;
-    public GetUserDto userId;
-    private int rating;
+    private GetBookDto bookId;
+    private Integer rating;
     private String comment;
     private Date reviewDate;
 
-    public GetReviewDto(long reviewId, GetBookDto bookId, GetUserDto userId, int rating, String comment, Date reviewDate) {
+    public PatchReviewResponseDto(long reviewId, GetBookDto bookId, Integer rating, String comment, Date reviewDate) {
         this.reviewId = reviewId;
         this.bookId = bookId;
-        this.userId = userId;
         this.rating = rating;
         this.comment = comment;
         this.reviewDate = reviewDate;
@@ -42,19 +37,11 @@ public class GetReviewDto {
         this.bookId = bookId;
     }
 
-    public GetUserDto getUserId() {
-        return userId;
-    }
-
-    public void setUserId(GetUserDto userId) {
-        this.userId = userId;
-    }
-
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface BookDetailsRepository extends JpaRepository<BookDetailsEntity,Long> {
-    Optional<BookDetailsEntity> findByBook(BookEntity book);
+    Optional<BookDetailsEntity> findByBookId(long bookId);
 }

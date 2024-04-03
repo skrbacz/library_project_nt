@@ -3,8 +3,13 @@ package com.projectnt.book;
 import com.projectnt.book.dto.CreateBookDto;
 import com.projectnt.book.dto.CreateBookResponseDto;
 import com.projectnt.book.dto.GetBookDto;
-import com.projectnt.book.error.BookAlreadyExists;
+import com.projectnt.book.dto.GetBooksPageResponseDto;
+import com.projectnt.book.error_or_message.BookAlreadyExists;
+import com.projectnt.book.error_or_message.BookDoesntExist;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +25,24 @@ public class BookService {
     public BookService(BookRepository bookRepository){
         this.bookRepository= bookRepository;
     }
-    public List<GetBookDto> getAll(){
-        var books =bookRepository.findAll();
-        return books.stream().map((book)->new GetBookDto(book.getBookId(),book.getIsbn(),book.getTitle(), book.getAuthor(), book.getPublisher(),book.getYearPublished(),book.getAvailableBooks()>0)).collect(Collectors.toList());
+    public GetBooksPageResponseDto getAll(int page, int size){
+        Page<BookEntity> booksPage;
+
+        Pageable pageable= PageRequest.of(page,size);
+
+        booksPage = bookRepository.findAll(pageable);
+
+        List<GetBookDto> booksDto = booksPage.getContent().stream().map(this::mapBook).toList();
+
+        return new GetBooksPageResponseDto(booksDto, booksPage.getNumber(),booksPage.getTotalElements(),booksPage.getTotalPages(),booksPage.hasNext());
     }
 
-    public GetBookDto getOne(long book_id){
-        var book= bookRepository.findById(book_id).orElseThrow(()-> new RuntimeException("Book not found"));
+    public GetBookDto getOneById(long book_id) {
+        var book = bookRepository.findById(book_id).orElseThrow(() -> BookDoesntExist.createWIthId(book_id));
+        return mapBook(book);
+    }
+
+    private GetBookDto mapBook(BookEntity book) {
         return new GetBookDto(book.getBookId(),book.getIsbn(),book.getTitle(), book.getAuthor(), book.getPublisher(),book.getYearPublished(),book.getAvailableBooks()>0);
     }
 
@@ -50,8 +66,10 @@ public class BookService {
 
     public void delete(long book_id){
         if (!bookRepository.existsById(book_id)){
-            throw new RuntimeException();
+            throw BookDoesntExist.createWIthId(book_id);
         }
         bookRepository.deleteById(book_id);
     }
 }
+
+

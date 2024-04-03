@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 public class BookDetailsAlreadyExist {
-    public static ResponseStatusException create(BookEntity book){
-        return new ResponseStatusException(HttpStatus.CONFLICT, String.format("Details to this book: \" %s \" already exist.",book.getTitle()));
+    public static ResponseStatusException create(long book){
+        return new ResponseStatusException(HttpStatus.CONFLICT, String.format("Details to book with this id: %s% already exist.",book));
     }
 }

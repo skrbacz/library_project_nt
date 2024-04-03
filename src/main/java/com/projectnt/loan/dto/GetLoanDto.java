@@ -1,7 +1,9 @@
 package com.projectnt.loan.dto;
 
 import com.projectnt.book.BookEntity;
+import com.projectnt.book.dto.GetBookDto;
 import com.projectnt.user.UserEntity;
+import com.projectnt.user.dto.GetUserDto;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -9,19 +11,17 @@ import java.util.Date;
 public class GetLoanDto {
 
     private long loanId;
-    public BookEntity bookId;
-    public UserEntity userId;
+    public GetBookDto book;
+    public GetUserDto user;
     private Date loanDate;
     private Date dueDate;
-    private Date returnDate;
 
-    public GetLoanDto(long loanId, BookEntity bookId, UserEntity userId, Date loanDate, Date dueDate, Date returnDate) {
+    public GetLoanDto(long loanId, GetBookDto book, GetUserDto user, Date loanDate, Date dueDate) {
         this.loanId = loanId;
-        this.bookId = bookId;
-        this.userId = userId;
+        this.book = book;
+        this.user = user;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.returnDate = returnDate;
     }
 
     public GetLoanDto() {
@@ -35,20 +35,20 @@ public class GetLoanDto {
         this.loanId = loanId;
     }
 
-    public BookEntity getBookId() {
-        return bookId;
+    public GetBookDto getBook() {
+        return book;
     }
 
-    public void setBookId(BookEntity bookId) {
-        this.bookId = bookId;
+    public void setBook(GetBookDto book) {
+        this.book = book;
     }
 
-    public UserEntity getUserId() {
-        return userId;
+    public GetUserDto getUser() {
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
+    public void setUser(GetUserDto user) {
+        this.user = user;
     }
 
     public Date getLoanDate() {
@@ -65,13 +65,5 @@ public class GetLoanDto {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
     }
 }

@@ -1,4 +1,4 @@
-package com.projectnt.book.error;
+package com.projectnt.book.error_or_message;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

@@ -1,29 +1,24 @@
 package com.projectnt.user.dto;
 
-import jakarta.validation.constraints.NotNull;
+public class PatchUserResponseDto {
 
-public class GetUserDto {
-
-    private Long userId;
+    private long userId;
     private String email;
     private String name;
-    private String lastName;
+    private String lastname;
 
-    public GetUserDto(Long userId, String email, String name, String lastName) {
+    public PatchUserResponseDto(long userId, String email, String name, String lastname) {
         this.userId = userId;
         this.email = email;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
     }
 
-    public GetUserDto() {
-    }
-
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -43,11 +38,12 @@ public class GetUserDto {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
+

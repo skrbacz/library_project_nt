@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 
 public class CreateBookDetailsResponseDto {
     private long bookId;
-    private BookEntity book;
     private String genre;
     private String summary;
     private String coverImageUrl;
 
-    public CreateBookDetailsResponseDto(long bookId, BookEntity book, String genre, String summary, String coverImageUrl) {
+    public CreateBookDetailsResponseDto(long bookId, String genre, String summary, String coverImageUrl) {
         this.bookId = bookId;
-        this.book = book;
         this.genre = genre;
         this.summary = summary;
         this.coverImageUrl = coverImageUrl;
@@ -27,14 +25,6 @@ public class CreateBookDetailsResponseDto {
 
     public void setBookId(long bookId) {
         this.bookId = bookId;
-    }
-
-    public BookEntity getBook() {
-        return book;
-    }
-
-    public void setBook(BookEntity book) {
-        this.book = book;
     }
 
     public String getGenre() {

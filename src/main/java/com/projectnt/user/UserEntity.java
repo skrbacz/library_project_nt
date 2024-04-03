@@ -1,7 +1,10 @@
 package com.projectnt.user;
 
+import com.projectnt.loan.LoanEntity;
 import com.projectnt.security.auth.AuthEntity;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="users", schema = "library")
@@ -13,10 +16,6 @@ public class UserEntity {
     private long userId;
 
     @Basic
-    @Column(name="lastName")
-    private String lastName;
-
-    @Basic
     @Column(name="email",nullable = false)
     private String email;
 
@@ -24,9 +23,32 @@ public class UserEntity {
     @Column(name="name")
     private String name;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private AuthEntity auth;
+    @Basic
+    @Column(name="lastName")
+    private String lastName;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<LoanEntity> loans;
+
+
+    public UserEntity(long userId, String email, String name, String lastName, List<LoanEntity> loans) {
+        this.userId = userId;
+        this.email = email;
+        this.name = name;
+        this.lastName = lastName;
+        this.loans = loans;
+    }
+
+    public UserEntity() {
+    }
+
+    public List<LoanEntity> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanEntity> loans) {
+        this.loans = loans;
+    }
 
     public long getUserId() {
         return userId;

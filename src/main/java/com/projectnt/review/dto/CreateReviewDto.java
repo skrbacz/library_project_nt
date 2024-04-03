@@ -1,57 +1,53 @@
 package com.projectnt.review.dto;
 
-import com.projectnt.book.BookEntity;
-import com.projectnt.user.UserEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 public class CreateReviewDto {
     @NotNull(message = "Book id is required")
-    public BookEntity bookId;
+    public Long bookId;
     @NotNull(message = "User id is required")
-    public UserEntity userId;
+    public Long userId;
     @NotNull(message = "Rating is required")
-    private int rating;
+    private Integer rating;
     @NotBlank(message = "Comment is required")
     private String comment;
     @NotNull(message = "Review date is required")
     private Date reviewDate;
 
-    public CreateReviewDto(BookEntity bookId, UserEntity userId, int rating, String comment, Date reviewDate) {
+    public CreateReviewDto(Long bookId, Long userId, Integer rating, String comment, Date reviewDate) {
         this.bookId = bookId;
         this.userId = userId;
         this.rating = rating;
         this.comment = comment;
         this.reviewDate = reviewDate;
     }
-
     public CreateReviewDto() {
     }
 
-    public BookEntity getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(BookEntity bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 
-    public UserEntity getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(UserEntity userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

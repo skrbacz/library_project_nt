@@ -1,9 +1,9 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.register_login.dto.LoginDto;
-import com.projectnt.register_login.dto.LoginResponseDto;
-import com.projectnt.register_login.dto.RegisterDto;
-import com.projectnt.register_login.dto.RegisterResponseDto;
+import com.projectnt.others.login_register_dto.LoginDto;
+import com.projectnt.others.login_register_dto.LoginResponseDto;
+import com.projectnt.others.login_register_dto.RegisterDto;
+import com.projectnt.others.login_register_dto.RegisterResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-
+@PreAuthorize("hasRole('ADMIN')")
 public class AuthController {
     @Autowired
     public AuthController(AuthService authService){
         this.authService= authService;
     }
-
     private final AuthService authService;
     @PostMapping("/register")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RegisterResponseDto> register(@Validated @RequestBody RegisterDto requestBody){
         RegisterResponseDto dto = authService.register(requestBody);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
@@ -33,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @PreAuthorize("permitAll()")
-    public ResponseEntity<LoginResponseDto> login(@Validated@RequestBody LoginDto requestBody){
+    public ResponseEntity<LoginResponseDto> login(@Validated @RequestBody LoginDto requestBody){
        LoginResponseDto dto= authService.login(requestBody);
        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
