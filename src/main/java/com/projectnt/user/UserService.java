@@ -4,21 +4,17 @@ import com.projectnt.security.auth.AuthEntity;
 import com.projectnt.security.auth.AuthRepository;
 import com.projectnt.security.auth.OwnershipService;
 import com.projectnt.user.dto.*;
-import com.projectnt.user.error.EmailAlreadyUsed;
+import com.projectnt.user.error.UserAlreadyExists;
 import com.projectnt.user.error.UserDoesntExist;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService extends OwnershipService {
@@ -52,7 +48,7 @@ public class UserService extends OwnershipService {
         Optional<UserEntity> existingEmail= userRepository.findByEmail(user.getEmail());
 
         if(existingEmail.isPresent()){
-            throw EmailAlreadyUsed.createWithEmail(user.getEmail());
+            throw UserAlreadyExists.createWithEmail(user.getEmail());
         }
 
         var userEntity= new UserEntity();

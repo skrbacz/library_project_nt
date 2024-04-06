@@ -10,30 +10,50 @@ import java.util.List;
 public class BookEntity {
 
     @Id()
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookId")
     private long bookId;
     @Basic
-    @Column(name="isbn", unique = true)
+    @Column(name = "isbn", unique = true)
     private String isbn;
     @Basic
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
     @Basic
-    @Column(name="author")
+    @Column(name = "author")
     private String author;
     @Basic
-    @Column(name="publisher")
+    @Column(name = "publisher")
     private String publisher;
     @Basic
-    @Column(name="yearPublished")
+    @Column(name = "yearPublished")
     private int yearPublished;
     @Basic
-    @Column(name="availableBooks")
+    @Column(name = "availableBooks")
     private int availableBooks;
+
+    @Embedded
+    private BookDetailsEntity bookDetails;
+
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<LoanEntity> loans;
+
+    public BookEntity(String author, int availableBooks, BookDetailsEntity bookDetails, long bookId, String isbn, List<LoanEntity> loans, String publisher, String title, int yearPublished) {
+        this.author = author;
+        this.availableBooks = availableBooks;
+        this.bookDetails = bookDetails;
+        this.bookId = bookId;
+        this.isbn = isbn;
+        this.loans = loans;
+        this.publisher = publisher;
+        this.title = title;
+        this.yearPublished = yearPublished;
+    }
+
+    public BookEntity() {
+
+    }
 
     public List<LoanEntity> getLoans() {
         return loans;
@@ -97,5 +117,52 @@ public class BookEntity {
 
     public void setAvailableBooks(int availableBooks) {
         this.availableBooks = availableBooks;
+    }
+
+    public BookDetailsEntity getBookDetails() {
+        return bookDetails;
+    }
+
+    public void setBookDetails(BookDetailsEntity bookDetails) {
+        this.bookDetails = bookDetails;
+    }
+
+    @Embeddable
+    public static class BookDetailsEntity {
+        @Basic
+        @Column(name = "genre")
+        private String genre;
+
+        @Basic
+        @Column(name = "summary")
+        private String summary;
+
+        @Basic
+        @Column(name = "coverImageUrl")
+        private String coverImageUrl;
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public void setGenre(String genre) {
+            this.genre = genre;
+        }
+
+        public String getCoverImageUrl() {
+            return coverImageUrl;
+        }
+
+        public void setCoverImageUrl(String coverImageUrl) {
+            this.coverImageUrl = coverImageUrl;
+        }
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
     }
 }

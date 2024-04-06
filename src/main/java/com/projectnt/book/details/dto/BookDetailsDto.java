@@ -1,25 +1,14 @@
-package com.projectnt.book_details.dto;
+package com.projectnt.book.details.dto;
 
-import org.openapitools.jackson.nullable.JsonNullable;
-
-public class PatchBookDetailsResponseDto {
-    private long bookId;
+public class BookDetailsDto {
     private String genre;
     private String summary;
     private String coverImageUrl;
 
-    public PatchBookDetailsResponseDto(long bookId, String genre, String summary, String coverImageUrl) {
-        this.bookId = bookId;
+    public BookDetailsDto(String coverImageUrl, String genre, String summary) {
+        this.coverImageUrl = coverImageUrl;
         this.genre = genre;
         this.summary = summary;
-        this.coverImageUrl = coverImageUrl;
-    }
-    public long getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
     }
 
     public String getGenre() {
@@ -45,4 +34,5 @@ public class PatchBookDetailsResponseDto {
     public void setCoverImageUrl(String coverImageUrl) {
         this.coverImageUrl = coverImageUrl;
     }
+
 }

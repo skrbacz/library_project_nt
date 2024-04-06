@@ -4,10 +4,9 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.book.BookRepository;
 import com.projectnt.book.dto.GetBookDto;
 import com.projectnt.book.error_or_message.BookDoesntExist;
-import com.projectnt.book_details.dto.GetBooksDetailsPagesDto;
+import com.projectnt.book.details.dto.BookDetailsDto;
 import com.projectnt.review.dto.*;
 import com.projectnt.review.error.ReviewDoesntExist;
-import com.projectnt.security.auth.AuthEntity;
 import com.projectnt.security.auth.AuthRepository;
 import com.projectnt.security.auth.OwnershipService;
 import com.projectnt.user.UserEntity;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewService extends OwnershipService {
@@ -56,7 +54,23 @@ public class ReviewService extends OwnershipService {
 
     public GetReviewDto mapReview(ReviewEntity review){
         GetUserDto user= new GetUserDto(review.getUser().getUserId(),review.getUser().getLastName(),review.getUser().getEmail(),review.getUser().getName());
-        GetBookDto book= new GetBookDto(review.getBook().getBookId(),review.getBook().getIsbn(),review.getBook().getTitle(),review.getBook().getAuthor(),review.getBook().getPublisher(),review.getBook().getYearPublished(),review.getBook().getAvailableBooks()>0);
+        BookDetailsDto bookDetails = new BookDetailsDto(
+                review.getBook().getBookDetails().getGenre(),
+                review.getBook().getBookDetails().getSummary(),
+                review.getBook().getBookDetails().getCoverImageUrl()
+        );
+
+        GetBookDto book = new GetBookDto(
+                review.getBook().getBookId(),
+                review.getBook().getIsbn(),
+                review.getBook().getTitle(),
+                review.getBook().getAuthor(),
+                review.getBook().getPublisher(),
+                review.getBook().getYearPublished(),
+                review.getBook().getAvailableBooks() > 0,
+                bookDetails // Add this parameter
+        );
+
         return new GetReviewDto(review.getReviewId(),book,user,review.getRating(),review.getComment(),review.getReviewDate());
     }
 
@@ -88,8 +102,13 @@ public class ReviewService extends OwnershipService {
     @PreAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,#userId)")
     public PatchReviewResponseDto update(long reviewId,PatchReviewDto dto){
         ReviewEntity review = reviewRepository.findById(reviewId).orElseThrow(()-> ReviewDoesntExist.createWithId(reviewId));
-        BookEntity book= bookRepository.findById(review.getBook().getBookId()).orElseThrow(()->BookDoesntExist.createWIthId(999999999));
-        GetBookDto bookDto= new GetBookDto(book.getBookId(),book.getIsbn(),book.getTitle(),book.getAuthor(),book.getPublisher(),book.getYearPublished(),book.getAvailableBooks()>0);
+        BookDetailsDto bookDetails = new BookDetailsDto(
+                review.getBook().getBookDetails().getGenre(),
+                review.getBook().getBookDetails().getSummary(),
+                review.getBook().getBookDetails().getCoverImageUrl()
+        );
+        var book = review.getBook();
+        GetBookDto bookDto= new GetBookDto(book.getBookId(),book.getIsbn(),book.getTitle(),book.getAuthor(),book.getPublisher(),book.getYearPublished(),book.getAvailableBooks()>0, bookDetails);
 
         dto.getComment().ifPresent(review::setComment);
         dto.getRating().ifPresent(review::setRating);

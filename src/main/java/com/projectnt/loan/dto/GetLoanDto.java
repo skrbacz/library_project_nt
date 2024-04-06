@@ -1,10 +1,7 @@
 package com.projectnt.loan.dto;
 
-import com.projectnt.book.BookEntity;
 import com.projectnt.book.dto.GetBookDto;
-import com.projectnt.user.UserEntity;
 import com.projectnt.user.dto.GetUserDto;
-import jakarta.persistence.*;
 
 import java.util.Date;
 

@@ -1,8 +1,5 @@
 package com.projectnt.loan.dto;
 
-import com.projectnt.book.BookEntity;
-import com.projectnt.user.UserEntity;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;

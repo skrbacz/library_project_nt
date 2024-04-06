@@ -1,11 +1,7 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.user.UserEntity;
-import com.projectnt.user.UserRepository;
-import com.projectnt.user.UserService;
 import com.projectnt.user.error.UserDoesntExist;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service

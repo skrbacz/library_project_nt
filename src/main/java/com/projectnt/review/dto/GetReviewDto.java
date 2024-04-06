@@ -1,11 +1,8 @@
 package com.projectnt.review.dto;
 
-import com.projectnt.book.BookEntity;
 import com.projectnt.book.dto.GetBookDto;
-import com.projectnt.user.UserEntity;
 import com.projectnt.user.dto.GetUserDto;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 public class GetReviewDto {

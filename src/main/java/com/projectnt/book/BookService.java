@@ -6,6 +6,9 @@ import com.projectnt.book.dto.GetBookDto;
 import com.projectnt.book.dto.GetBooksPageResponseDto;
 import com.projectnt.book.error_or_message.BookAlreadyExists;
 import com.projectnt.book.error_or_message.BookDoesntExist;
+import com.projectnt.book.details.dto.BookDetailsDto;
+import com.projectnt.book.details.dto.UpdateBookDetailsDto;
+import com.projectnt.book.details.dto.UpdateBookDetailsResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -43,7 +45,21 @@ public class BookService {
     }
 
     private GetBookDto mapBook(BookEntity book) {
-        return new GetBookDto(book.getBookId(),book.getIsbn(),book.getTitle(), book.getAuthor(), book.getPublisher(),book.getYearPublished(),book.getAvailableBooks()>0);
+        BookEntity.BookDetailsEntity bookDetails = book.getBookDetails();
+        return new GetBookDto(
+                book.getBookId(),
+                book.getIsbn(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getPublisher(),
+                book.getYearPublished(),
+                book.getAvailableBooks() > 0,
+                new BookDetailsDto(
+                        bookDetails.getGenre(),
+                        bookDetails.getSummary(),
+                        bookDetails.getCoverImageUrl()
+                )
+        );
     }
 
     public CreateBookResponseDto create(CreateBookDto book){
@@ -64,12 +80,25 @@ public class BookService {
         return new CreateBookResponseDto(newBook.getBookId(), newBook.getIsbn(), newBook.getTitle(), newBook.getAuthor(), newBook.getPublisher(), newBook.getYearPublished(), newBook.getAvailableBooks());
     }
 
+    public UpdateBookDetailsResponseDto updateDetails(long book_id, UpdateBookDetailsDto dto){
+        var book= bookRepository.findById(book_id).orElseThrow(() -> BookDoesntExist.createWIthId(book_id));
+
+        var bookDetails= new BookEntity.BookDetailsEntity();
+        bookDetails.setGenre(dto.getGenre());
+        bookDetails.setSummary(dto.getSummary());
+        bookDetails.setCoverImageUrl(dto.getCoverImageUrl());
+
+        return new UpdateBookDetailsResponseDto(book.getBookId(), book.getIsbn(), book.getTitle(), book.getAuthor(), book.getPublisher(), book.getYearPublished(), book.getAvailableBooks(), new BookDetailsDto(bookDetails.getGenre(), bookDetails.getSummary(), bookDetails.getCoverImageUrl()));
+    }
+    
+
     public void delete(long book_id){
         if (!bookRepository.existsById(book_id)){
             throw BookDoesntExist.createWIthId(book_id);
         }
         bookRepository.deleteById(book_id);
     }
+
 }
 
 

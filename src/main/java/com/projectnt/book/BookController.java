@@ -1,5 +1,7 @@
 package com.projectnt.book;
 
+import com.projectnt.book.details.dto.UpdateBookDetailsDto;
+import com.projectnt.book.details.dto.UpdateBookDetailsResponseDto;
 import com.projectnt.book.dto.CreateBookDto;
 import com.projectnt.book.dto.CreateBookResponseDto;
 import com.projectnt.book.dto.GetBookDto;
@@ -10,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -24,6 +24,7 @@ public class BookController {
     public BookController(BookService bookService){
         this.bookService= bookService;
     }
+
 
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
@@ -50,4 +51,15 @@ public class BookController {
         bookService.delete(book_id);
         return ResponseEntity.accepted().build();
     }
+
+
+    //book details
+
+    @PatchMapping("/{book_id}/details")
+    public ResponseEntity<UpdateBookDetailsResponseDto> updateDetails(@PathVariable long book_id, @RequestBody @Validated UpdateBookDetailsDto dto){
+        UpdateBookDetailsResponseDto responseDto= bookService.updateDetails(book_id,dto);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+    }
+
+
 }

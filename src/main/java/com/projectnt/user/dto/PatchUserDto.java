@@ -1,8 +1,5 @@
 package com.projectnt.user.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 public class PatchUserDto {

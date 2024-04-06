@@ -71,8 +71,8 @@ public class ReviewEntity {
         return comment;
     }
 
-    public void setComment(String commment) {
-        this.comment = commment;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Date getReviewDate() {

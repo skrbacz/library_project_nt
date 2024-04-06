@@ -1,39 +1,21 @@
-package com.projectnt.book_details.dto;
+package com.projectnt.book.details.dto;
 
-import com.projectnt.book.BookEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public class GetBookDetailsDto {
-    private long bookId;
-    private BookEntity book;
+public class UpdateBookDetailsDto {
+
+    @NotBlank(message = "Genre is required")
     private String genre;
+    @NotBlank(message = "Summary is required")
     private String summary;
+    @NotBlank(message = "Cover image is required")
     private String coverImageUrl;
 
-    public GetBookDetailsDto(long bookId, BookEntity book, String genre, String summary, String coverImageUrl) {
-        this.bookId = bookId;
-        this.book = book;
+    public UpdateBookDetailsDto(String genre, String summary, String coverImageUrl) {
         this.genre = genre;
         this.summary = summary;
         this.coverImageUrl = coverImageUrl;
-    }
-
-    public GetBookDetailsDto() {
-    }
-
-    public long getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
-    }
-
-    public BookEntity getBook() {
-        return book;
-    }
-
-    public void setBook(BookEntity book) {
-        this.book = book;
     }
 
     public String getGenre() {
@@ -60,3 +42,4 @@ public class GetBookDetailsDto {
         this.coverImageUrl = coverImageUrl;
     }
 }
+

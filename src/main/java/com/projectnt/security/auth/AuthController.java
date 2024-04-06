@@ -1,9 +1,9 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.others.login_register_dto.LoginDto;
-import com.projectnt.others.login_register_dto.LoginResponseDto;
-import com.projectnt.others.login_register_dto.RegisterDto;
-import com.projectnt.others.login_register_dto.RegisterResponseDto;
+import com.projectnt.other.login_register_dto.LoginDto;
+import com.projectnt.other.login_register_dto.LoginResponseDto;
+import com.projectnt.other.login_register_dto.RegisterDto;
+import com.projectnt.other.login_register_dto.RegisterResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ public class AuthController {
     }
     private final AuthService authService;
     @PostMapping("/register")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<RegisterResponseDto> register(@Validated @RequestBody RegisterDto requestBody){
         RegisterResponseDto dto = authService.register(requestBody);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);

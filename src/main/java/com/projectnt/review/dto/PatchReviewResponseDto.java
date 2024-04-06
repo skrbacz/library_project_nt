@@ -1,7 +1,6 @@
 package com.projectnt.review.dto;
 
 import com.projectnt.book.dto.GetBookDto;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.util.Date;
 

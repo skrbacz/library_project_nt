@@ -1,16 +1,16 @@
-package com.projectnt.book_details.dto;
+package com.projectnt.book.details.dto;
 
 import java.util.List;
 
 public class GetBooksDetailsPagesDto {
 
-    private List<GetBookDetailsDto> booksDetails;
+    private List<BookDetailsDto> booksDetails;
     private int currentPage;
     private long totalItems;
     private int totalPages;
     private boolean hasMore;
 
-    public GetBooksDetailsPagesDto(List<GetBookDetailsDto> booksDetails, int currentPage, long totalItems, int totalPages, boolean hasMore) {
+    public GetBooksDetailsPagesDto(List<BookDetailsDto> booksDetails, int currentPage, long totalItems, int totalPages, boolean hasMore) {
         this.booksDetails = booksDetails;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
@@ -18,11 +18,11 @@ public class GetBooksDetailsPagesDto {
         this.hasMore = hasMore;
     }
 
-    public List<GetBookDetailsDto> getBooksDetails() {
+    public List<BookDetailsDto> getBooksDetails() {
         return booksDetails;
     }
 
-    public void setBooksDetails(List<GetBookDetailsDto> booksDetails) {
+    public void setBooksDetails(List<BookDetailsDto> booksDetails) {
         this.booksDetails = booksDetails;
     }
 

@@ -1,5 +1,7 @@
 package com.projectnt.book.dto;
 
+import com.projectnt.book.details.dto.BookDetailsDto;
+
 public class GetBookDto {
     private long bookId;
     private String isbn;
@@ -7,18 +9,18 @@ public class GetBookDto {
     private String author;
     private String publisher;
     private int yearPublished;
-    private boolean isAvailabe;
+    private boolean isAvailable;
+    private BookDetailsDto bookDetailsDto;
 
-    public GetBookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailabe) {
+    public GetBookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailable, BookDetailsDto bookDetailsDto) {
         this.bookId = bookId;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.yearPublished = yearPublished;
-        this.isAvailabe = isAvailabe;
-    }
-    public GetBookDto() {
+        this.isAvailable = isAvailable;
+        this.bookDetailsDto = bookDetailsDto;
     }
 
     public long getBookId() {
@@ -69,11 +71,19 @@ public class GetBookDto {
         this.yearPublished = yearPublished;
     }
 
-    public boolean isAvailabe() {
-        return isAvailabe;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setAvailabe(boolean availabe) {
-        isAvailabe = availabe;
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public BookDetailsDto getBookDetailsDto() {
+        return bookDetailsDto;
+    }
+
+    public void setBookDetailsDto(BookDetailsDto bookDetailsDto) {
+        this.bookDetailsDto = bookDetailsDto;
     }
 }

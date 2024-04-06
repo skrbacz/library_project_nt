@@ -1,7 +1,6 @@
 package com.projectnt.user;
 
 import com.projectnt.loan.LoanEntity;
-import com.projectnt.security.auth.AuthEntity;
 import jakarta.persistence.*;
 
 import java.util.List;

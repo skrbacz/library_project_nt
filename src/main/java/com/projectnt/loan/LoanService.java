@@ -4,6 +4,7 @@ import com.projectnt.book.BookEntity;
 import com.projectnt.book.BookRepository;
 import com.projectnt.book.dto.GetBookDto;
 import com.projectnt.book.error_or_message.BookDoesntExist;
+import com.projectnt.book.details.dto.BookDetailsDto;
 import com.projectnt.loan.dto.*;
 import com.projectnt.loan.error.LoanDoesntExist;
 import com.projectnt.security.auth.AuthRepository;
@@ -36,7 +37,7 @@ public class LoanService extends OwnershipService {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
     }
-    //TODO: MAKE IT SAME FOR ALL BOOKS, REVIEWS, BOOK DETAILS, USERS
+
     @PreAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,#userId)")
     public GetLoansPageResponseDto getAll(Long userId,int page, int size){
         Page<LoanEntity> loansPage;
@@ -60,10 +61,38 @@ public class LoanService extends OwnershipService {
         return mapLoan(loan);
     }
 
-    private GetLoanDto mapLoan(LoanEntity loan){
-        GetUserDto user= new GetUserDto(loan.getUser().getUserId(),loan.getUser().getLastName(),loan.getUser().getEmail(),loan.getUser().getName());
-        GetBookDto book= new GetBookDto(loan.getBook().getBookId(),loan.getBook().getIsbn(),loan.getBook().getTitle(),loan.getBook().getAuthor(),loan.getBook().getPublisher(),loan.getBook().getYearPublished(),loan.getBook().getAvailableBooks()>0);
-        return new GetLoanDto(loan.getLoanId(),book,user,loan.getLoanDate(),loan.getDueDate());
+    private GetLoanDto mapLoan(LoanEntity loan) {
+        GetUserDto user = new GetUserDto(
+                loan.getUser().getUserId(),
+                loan.getUser().getLastName(),
+                loan.getUser().getEmail(),
+                loan.getUser().getName()
+        );
+
+        BookDetailsDto bookDetails = new BookDetailsDto(
+                loan.getBook().getBookDetails().getGenre(),
+                loan.getBook().getBookDetails().getSummary(),
+                loan.getBook().getBookDetails().getCoverImageUrl()
+        );
+
+        GetBookDto book = new GetBookDto(
+                loan.getBook().getBookId(),
+                loan.getBook().getIsbn(),
+                loan.getBook().getTitle(),
+                loan.getBook().getAuthor(),
+                loan.getBook().getPublisher(),
+                loan.getBook().getYearPublished(),
+                loan.getBook().getAvailableBooks() > 0,
+                bookDetails // Add this parameter
+        );
+
+        return new GetLoanDto(
+                loan.getLoanId(),
+                book,
+                user,
+                loan.getLoanDate(),
+                loan.getDueDate()
+        );
     }
 
     @PreAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,#userId)")
@@ -71,6 +100,8 @@ public class LoanService extends OwnershipService {
 
         UserEntity user= userRepository.findById(loanDto.getUserId()).orElseThrow(() -> UserDoesntExist.createWithId(loanDto.getUserId()));
         BookEntity book= bookRepository.findById(loanDto.getBookId()).orElseThrow(()-> BookDoesntExist.createWIthId(loanDto.getBookId()));
+
+
         var loanEntity= new LoanEntity();
         loanEntity.setBook(book);
         loanEntity.setUser(user);

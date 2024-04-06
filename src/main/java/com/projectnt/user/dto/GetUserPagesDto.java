@@ -1,7 +1,5 @@
 package com.projectnt.user.dto;
 
-import com.projectnt.user.UserEntity;
-
 import java.util.List;
 
 public class GetUserPagesDto {

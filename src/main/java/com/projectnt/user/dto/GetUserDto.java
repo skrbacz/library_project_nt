@@ -1,7 +1,5 @@
 package com.projectnt.user.dto;
 
-import jakarta.validation.constraints.NotNull;
-
 public class GetUserDto {
 
     private Long userId;

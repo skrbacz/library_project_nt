@@ -1,4 +1,4 @@
-package com.projectnt.others.config;
+package com.projectnt.other.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.openapitools.jackson.nullable.JsonNullableModule;
