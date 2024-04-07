@@ -48,7 +48,9 @@ public class UserService extends OwnershipService {
         if(!userRepository.existsById(userId)){
             throw UserDoesntExist.createWithId(userId);
         }
+        authRepository.deleteById(userId);
         userRepository.deleteById(userId);
+
     }
 
     public UserDto getUserByUsername(String username){
