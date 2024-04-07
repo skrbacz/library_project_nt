@@ -5,6 +5,7 @@ import com.projectnt.book.BookRepository;
 import com.projectnt.book.dto.BookDto;
 import com.projectnt.book.error_or_message.BookDoesntExist;
 import com.projectnt.book.details.dto.BookDetailsDto;
+import com.projectnt.book.error_or_message.BookNotAvailable;
 import com.projectnt.loan.dto.*;
 import com.projectnt.loan.error.LoanAlreadyReturned;
 import com.projectnt.loan.error.LoanDoesntExist;
@@ -70,6 +71,12 @@ public class LoanService extends OwnershipService {
         UserEntity user = userRepository.findById(loanDto.getUserId()).orElseThrow(() -> UserDoesntExist.createWithId(loanDto.getUserId()));
         BookEntity book = bookRepository.findById(loanDto.getBookId()).orElseThrow(() -> BookDoesntExist.createWIthId(loanDto.getBookId()));
 
+        if(book.getAvailableBooks() > 0){
+            book.setAvailableBooks(book.getAvailableBooks() - 1);
+        }else {
+            throw BookNotAvailable.createWIthId(book.getBookId());
+        }
+
         var loanEntity = new LoanEntity();
         loanEntity.setBook(book);
         loanEntity.setUser(user);
@@ -90,6 +97,7 @@ public class LoanService extends OwnershipService {
 
     public ReturnLoanResponseDto returnBook(Long loanId, Authentication authentication) {
         var loan = loanRepository.findById(loanId).orElseThrow(() -> LoanDoesntExist.create(loanId));
+        var book= bookRepository.findById(loan.getBook().getBookId()).orElseThrow(()-> BookDoesntExist.createWIthId(loan.getBook().getBookId()));
 
         if(!isOwnerOrAdmin(getAuthInfo(authentication), loan.getUser().getUserId())){
             throw UnauthorizedAttemptError.create();
@@ -99,15 +107,15 @@ public class LoanService extends OwnershipService {
             throw LoanAlreadyReturned.create(loan.getLoanId());
         }
 
+        book.setAvailableBooks(book.getAvailableBooks() + 1);
         loan.setReturnDate(LocalDate.now());
         loanRepository.save(loan);
-
         return new ReturnLoanResponseDto(loan.getLoanId(), loan.getBook().getBookId(), loan.getUser().getUserId(), loan.getLoanDate(), loan.getDueDate(), loan.getReturnDate());
     }
 
     private LoanDto mapLoan(LoanEntity loan) {
         var auth = authRepository.findByUserUserId(loan.getUser().getUserId());
-        UserDto user = new UserDto(
+        UserDto userDto = new UserDto(
                 loan.getUser().getUserId(),
                 loan.getUser().getLastName(),
                 loan.getUser().getEmail(),
@@ -115,30 +123,47 @@ public class LoanService extends OwnershipService {
                 auth.getUsername()
         );
 
-        BookDetailsDto bookDetails = new BookDetailsDto(
-                loan.getBook().getBookDetails().getGenre(),
-                loan.getBook().getBookDetails().getSummary(),
-                loan.getBook().getBookDetails().getCoverImageUrl()
-        );
-
-        BookDto book = new BookDto(
-                loan.getBook().getBookId(),
-                loan.getBook().getIsbn(),
-                loan.getBook().getTitle(),
-                loan.getBook().getAuthor(),
-                loan.getBook().getPublisher(),
-                loan.getBook().getYearPublished(),
-                loan.getBook().getAvailableBooks() > 0,
-                bookDetails // Add this parameter
-        );
+        var bookDto= mapBook(loan.getBook());
 
         return new LoanDto(
                 loan.getLoanId(),
-                book,
-                user,
+                bookDto,
+                userDto,
                 loan.getLoanDate(),
                 loan.getDueDate()
         );
+    }
+
+    private BookDto mapBook(BookEntity book) {
+        BookEntity.BookDetailsEntity bookDetails = book.getBookDetails();
+
+        if (bookDetails == null || bookDetails.getGenre() == null || bookDetails.getGenre().isEmpty()) {
+            return new BookDto(
+                    book.getBookId(),
+                    book.getIsbn(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getPublisher(),
+                    book.getYearPublished(),
+                    book.getAvailableBooks() > 0,
+                    new BookDetailsDto("", "", "")
+            );
+        } else {
+            return new BookDto(
+                    book.getBookId(),
+                    book.getIsbn(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getPublisher(),
+                    book.getYearPublished(),
+                    book.getAvailableBooks() > 0,
+                    new BookDetailsDto(
+                            bookDetails.getGenre(),
+                            bookDetails.getSummary(),
+                            bookDetails.getCoverImageUrl()
+                    )
+            );
+        }
     }
 
 }
