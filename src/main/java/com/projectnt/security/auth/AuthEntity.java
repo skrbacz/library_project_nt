@@ -30,14 +30,6 @@ public class AuthEntity {
     @JoinColumn(name= "user_id",  nullable = false)
     private UserEntity user;
 
-    public AuthEntity(long auth_id, String username, String password, UserRole role, UserEntity user) {
-        this.auth_id = auth_id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.user = user;
-    }
-
     public AuthEntity() {
     }
 

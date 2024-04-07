@@ -25,16 +25,6 @@ public class RegisterDto {
     @Email
     private String email;
 
-    public RegisterDto(String password, String username, UserRole role, String email) {
-        this.password = password;
-        this.username = username;
-        this.role = role;
-        this.email = email;
-    }
-
-    public RegisterDto() {
-    }
-
     public String getPassword() {
         return password;
     }

@@ -6,7 +6,6 @@ import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name="reviews", schema = "library")

@@ -39,21 +39,7 @@ public class BookEntity {
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<LoanEntity> loans;
 
-    public BookEntity(String author, int availableBooks, BookDetailsEntity bookDetails, long bookId, String isbn, List<LoanEntity> loans, String publisher, String title, int yearPublished) {
-        this.author = author;
-        this.availableBooks = availableBooks;
-        this.bookDetails = bookDetails;
-        this.bookId = bookId;
-        this.isbn = isbn;
-        this.loans = loans;
-        this.publisher = publisher;
-        this.title = title;
-        this.yearPublished = yearPublished;
-    }
-
-    public BookEntity() {
-
-    }
+    public BookEntity() {}
 
     public List<LoanEntity> getLoans() {
         return loans;

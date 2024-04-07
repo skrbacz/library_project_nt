@@ -29,18 +29,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<LoanEntity> loans;
 
-
-    public UserEntity(long userId, String email, String name, String lastName, List<LoanEntity> loans) {
-        this.userId = userId;
-        this.email = email;
-        this.name = name;
-        this.lastName = lastName;
-        this.loans = loans;
-    }
-
-    public UserEntity() {
-    }
-
     public List<LoanEntity> getLoans() {
         return loans;
     }

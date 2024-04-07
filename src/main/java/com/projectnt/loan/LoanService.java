@@ -60,7 +60,7 @@ public class LoanService extends OwnershipService {
 
     @PostAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,returnObject.user.userId)")
     public LoanDto getOneById(long loanId) {
-        LoanEntity loan = loanRepository.findById(loanId).orElseThrow(() -> LoanDoesntExist.createWithId(loanId));
+        LoanEntity loan = loanRepository.findById(loanId).orElseThrow(() -> LoanDoesntExist.create(loanId));
         return mapLoan(loan);
     }
 
@@ -83,13 +83,13 @@ public class LoanService extends OwnershipService {
 
     public void delete(long loanId) {
         if (!loanRepository.existsById(loanId)) {
-            throw LoanDoesntExist.createWithId(loanId);
+            throw LoanDoesntExist.create(loanId);
         }
         loanRepository.deleteById(loanId);
     }
 
     public ReturnLoanResponseDto returnBook(Long loanId, Authentication authentication) {
-        var loan = loanRepository.findById(loanId).orElseThrow(() -> LoanDoesntExist.createWithId(loanId));
+        var loan = loanRepository.findById(loanId).orElseThrow(() -> LoanDoesntExist.create(loanId));
 
         if(!isOwnerOrAdmin(getAuthInfo(authentication), loan.getUser().getUserId())){
             throw UnauthorizedAttemptError.create();

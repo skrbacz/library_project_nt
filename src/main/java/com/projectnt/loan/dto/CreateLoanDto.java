@@ -21,15 +21,6 @@ public class CreateLoanDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public CreateLoanDto(Long bookId, Long userId, LocalDate dueDate) {
-        this.bookId = bookId;
-        this.userId = userId;
-        this.dueDate = dueDate;
-    }
-
-    public CreateLoanDto() {
-    }
-
     public Long getBookId() {
         return bookId;
     }

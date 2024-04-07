@@ -27,16 +27,6 @@ public class CreateReviewDto {
     @Schema(name = "reviewDate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Date reviewDate;
 
-    public CreateReviewDto(Long bookId, Long userId, Integer rating, String comment, Date reviewDate) {
-        this.bookId = bookId;
-        this.userId = userId;
-        this.rating = rating;
-        this.comment = comment;
-        this.reviewDate = reviewDate;
-    }
-    public CreateReviewDto() {
-    }
-
     public Long getBookId() {
         return bookId;
     }

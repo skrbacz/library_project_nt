@@ -1,6 +1,5 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.loan.LoanEntity;
 import com.projectnt.other.common_types.UserRole;
 import com.projectnt.user.error.UserDoesntExist;
 import org.springframework.beans.factory.annotation.Autowired;
