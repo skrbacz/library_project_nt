@@ -1,13 +1,16 @@
 package com.projectnt.user.dto;
 
-public class PatchUserResponseDto {
+public class UpdateUserResponseDto {
 
     private long userId;
+
     private String email;
+
     private String name;
+
     private String lastname;
 
-    public PatchUserResponseDto(long userId, String email, String name, String lastname) {
+    public UpdateUserResponseDto(long userId, String email, String name, String lastname) {
         this.userId = userId;
         this.email = email;
         this.name = name;

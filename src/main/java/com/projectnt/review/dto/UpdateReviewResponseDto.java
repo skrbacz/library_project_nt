@@ -1,18 +1,24 @@
 package com.projectnt.review.dto;
 
-import com.projectnt.book.dto.GetBookDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projectnt.book.dto.BookDto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class PatchReviewResponseDto {
+public class UpdateReviewResponseDto {
 
     private long reviewId;
-    private GetBookDto bookId;
-    private Integer rating;
-    private String comment;
-    private Date reviewDate;
 
-    public PatchReviewResponseDto(long reviewId, GetBookDto bookId, Integer rating, String comment, Date reviewDate) {
+    private BookDto bookId;
+
+    private Integer rating;
+
+    private String comment;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reviewDate;
+
+    public UpdateReviewResponseDto(long reviewId, BookDto bookId, Integer rating, String comment, LocalDate reviewDate) {
         this.reviewId = reviewId;
         this.bookId = bookId;
         this.rating = rating;
@@ -28,11 +34,11 @@ public class PatchReviewResponseDto {
         this.reviewId = reviewId;
     }
 
-    public GetBookDto getBookId() {
+    public BookDto getBookId() {
         return bookId;
     }
 
-    public void setBookId(GetBookDto bookId) {
+    public void setBookId(BookDto bookId) {
         this.bookId = bookId;
     }
 
@@ -52,11 +58,11 @@ public class PatchReviewResponseDto {
         this.comment = comment;
     }
 
-    public Date getReviewDate() {
+    public LocalDate getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(Date reviewDate) {
+    public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
     }
 }

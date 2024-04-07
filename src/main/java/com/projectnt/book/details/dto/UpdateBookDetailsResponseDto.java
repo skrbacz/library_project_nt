@@ -3,12 +3,19 @@ package com.projectnt.book.details.dto;
 public class UpdateBookDetailsResponseDto {
 
     private long bookId;
+
     private String isbn;
+
     private String title;
+
     private String author;
+
     private String publisher;
+
     private int yearPublished;
+
     private int availableCopies;
+
     private BookDetailsDto bookDetails;
 
     public UpdateBookDetailsResponseDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, int availableCopies, BookDetailsDto bookDetails) {

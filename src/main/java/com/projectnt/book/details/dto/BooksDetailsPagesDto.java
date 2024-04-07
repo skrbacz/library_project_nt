@@ -1,28 +1,33 @@
-package com.projectnt.user.dto;
+package com.projectnt.book.details.dto;
 
 import java.util.List;
 
-public class GetUserPagesDto {
-    List<GetUserDto> users;
+public class BooksDetailsPagesDto {
+
+    private List<BookDetailsDto> booksDetails;
+
     private int currentPage;
+
     private long totalItems;
+
     private int totalPages;
+
     private boolean hasMore;
 
-    public GetUserPagesDto(List<GetUserDto> users, int currentPage, long totalItems, int totalPages, boolean hasMore) {
-        this.users = users;
+    public BooksDetailsPagesDto(List<BookDetailsDto> booksDetails, int currentPage, long totalItems, int totalPages, boolean hasMore) {
+        this.booksDetails = booksDetails;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
         this.totalPages = totalPages;
         this.hasMore = hasMore;
     }
 
-    public List<GetUserDto> getUsers() {
-        return users;
+    public List<BookDetailsDto> getBooksDetails() {
+        return booksDetails;
     }
 
-    public void setUsers(List<GetUserDto> users) {
-        this.users = users;
+    public void setBooksDetails(List<BookDetailsDto> booksDetails) {
+        this.booksDetails = booksDetails;
     }
 
     public int getCurrentPage() {

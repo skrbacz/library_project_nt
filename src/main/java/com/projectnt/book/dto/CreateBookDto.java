@@ -1,20 +1,33 @@
 package com.projectnt.book.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CreateBookDto {
+
     @NotBlank(message = "Isbn is required")
+    @Schema(name = "isbn", example = "isbn")
     private String isbn;
+
     @NotBlank(message = "Title is required")
+    @Schema(name = "title", example = "title")
     private String title;
+
     @NotBlank(message = "Author is required")
+    @Schema(name = "author", example = "author" )
     private String author;
+
     @NotBlank(message = "Publisher is required")
+    @Schema(name= "publisher", example = "publisher")
     private String publisher;
+
     @NotNull(message = "Year of publication is required")
+    @Schema(name = "yearPublished", example = "YYYY")
     private Integer yearPublished;
+
     @NotNull(message = "Amount of available copies is required")
+    @Schema(name = "availableCopies", example = "10")
     private Integer availableCopies;
 
 
@@ -25,9 +38,6 @@ public class CreateBookDto {
         this.publisher = publisher;
         this.yearPublished = yearPublished;
         this.availableCopies = availableCopies;
-    }
-
-    public CreateBookDto() {
     }
 
     public String getIsbn() {

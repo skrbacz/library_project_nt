@@ -1,15 +1,20 @@
 package com.projectnt.user.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-public class PatchUserDto {
+public class UpdateUserDto {
 
-
+    @Schema(name = "email", example = "example@email.com", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private JsonNullable<String> email;
+
+    @Schema(name = "name", example = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private JsonNullable<String> name;
+
+    @Schema(name = "lastName", example = "last name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private JsonNullable<String> lastname;
 
-    public PatchUserDto(JsonNullable<String> email, JsonNullable<String> name, JsonNullable<String> lastname) {
+    public UpdateUserDto(JsonNullable<String> email, JsonNullable<String> name, JsonNullable<String> lastname) {
         this.email = email;
         this.name = name;
         this.lastname = lastname;

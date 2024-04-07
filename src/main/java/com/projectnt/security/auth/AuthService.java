@@ -1,13 +1,15 @@
 package com.projectnt.security.auth;
 
-import com.projectnt.other.login_register_dto.LoginDto;
-import com.projectnt.other.login_register_dto.LoginResponseDto;
-import com.projectnt.other.login_register_dto.RegisterDto;
-import com.projectnt.other.login_register_dto.RegisterResponseDto;
+import com.projectnt.security.login_register_dto.LoginDto;
+import com.projectnt.security.login_register_dto.LoginResponseDto;
+import com.projectnt.security.login_register_dto.RegisterDto;
+import com.projectnt.security.login_register_dto.RegisterResponseDto;
+import com.projectnt.security.error.AuthError;
 import com.projectnt.user.error.UserAlreadyExists;
 import com.projectnt.security.jwt.JwtService;
 import com.projectnt.user.UserEntity;
 import com.projectnt.user.UserRepository;
+import com.projectnt.user.error.UserDoesntExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,9 +60,9 @@ public class AuthService {
     }
 
     public LoginResponseDto login(LoginDto dto){
-        AuthEntity authEntity=authRepository.findByUsername(dto.getUsername()).orElseThrow(RuntimeException::new);
+        AuthEntity authEntity=authRepository.findByUsername(dto.getUsername()).orElseThrow(()-> UserDoesntExist.createWithUsername(dto.getUsername()));
         if(!passwordEncoder.matches(dto.getPassword(),authEntity.getPassword())){
-            throw new RuntimeException("Password or username don't match");
+            throw AuthError.createPass();
         }
        String token=  jwtService.generateToken(authEntity);
 

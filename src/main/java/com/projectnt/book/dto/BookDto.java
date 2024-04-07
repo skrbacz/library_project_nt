@@ -2,7 +2,7 @@ package com.projectnt.book.dto;
 
 import com.projectnt.book.details.dto.BookDetailsDto;
 
-public class GetBookDto {
+public class BookDto {
     private long bookId;
     private String isbn;
     private String title;
@@ -10,9 +10,9 @@ public class GetBookDto {
     private String publisher;
     private int yearPublished;
     private boolean isAvailable;
-    private BookDetailsDto bookDetailsDto;
+    private BookDetailsDto bookDetails;
 
-    public GetBookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailable, BookDetailsDto bookDetailsDto) {
+    public BookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailable, BookDetailsDto bookDetails) {
         this.bookId = bookId;
         this.isbn = isbn;
         this.title = title;
@@ -20,7 +20,10 @@ public class GetBookDto {
         this.publisher = publisher;
         this.yearPublished = yearPublished;
         this.isAvailable = isAvailable;
-        this.bookDetailsDto = bookDetailsDto;
+        this.bookDetails = bookDetails;
+    }
+
+    public BookDto() {
     }
 
     public long getBookId() {
@@ -79,11 +82,11 @@ public class GetBookDto {
         isAvailable = available;
     }
 
-    public BookDetailsDto getBookDetailsDto() {
-        return bookDetailsDto;
+    public BookDetailsDto getBookDetails() {
+        return bookDetails;
     }
 
-    public void setBookDetailsDto(BookDetailsDto bookDetailsDto) {
-        this.bookDetailsDto = bookDetailsDto;
+    public void setBookDetails(BookDetailsDto bookDetails) {
+        this.bookDetails = bookDetails;
     }
 }

@@ -1,16 +1,27 @@
 package com.projectnt.loan.dto;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class PatchLoanResponseDto {
+import java.time.LocalDate;
+
+public class ReturnLoanResponseDto {
+
     private long loanId;
-    public long bookId;
-    public long userId;
-    private Date loanDate;
-    private Date dueDate;
-    private Date returnDate;
 
-    public PatchLoanResponseDto(long loanId, long bookId, long userId, Date loanDate, Date dueDate, Date returnDate) {
+    public long bookId;
+
+    public long userId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate loanDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate returnDate;
+
+    public ReturnLoanResponseDto(long loanId, long bookId, long userId, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {
         this.loanId = loanId;
         this.bookId = bookId;
         this.userId = userId;
@@ -43,27 +54,28 @@ public class PatchLoanResponseDto {
         this.userId = userId;
     }
 
-    public Date getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+
 }

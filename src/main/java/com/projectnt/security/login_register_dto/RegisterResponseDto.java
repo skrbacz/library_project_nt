@@ -1,11 +1,13 @@
-package com.projectnt.other.login_register_dto;
+package com.projectnt.security.login_register_dto;
 
 import com.projectnt.other.common_types.UserRole;
 
 public class RegisterResponseDto {
+
     private String username;
 
     private long userId;
+
     private UserRole role;
 
     public RegisterResponseDto(String username, long userId, UserRole role) {

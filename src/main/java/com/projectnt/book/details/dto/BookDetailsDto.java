@@ -1,14 +1,17 @@
 package com.projectnt.book.details.dto;
 
 public class BookDetailsDto {
+
     private String genre;
+
     private String summary;
+
     private String coverImageUrl;
 
-    public BookDetailsDto(String coverImageUrl, String genre, String summary) {
-        this.coverImageUrl = coverImageUrl;
+    public BookDetailsDto(String genre, String summary, String coverImageUrl) {
         this.genre = genre;
         this.summary = summary;
+        this.coverImageUrl = coverImageUrl;
     }
 
     public String getGenre() {
@@ -34,5 +37,4 @@ public class BookDetailsDto {
     public void setCoverImageUrl(String coverImageUrl) {
         this.coverImageUrl = coverImageUrl;
     }
-
 }

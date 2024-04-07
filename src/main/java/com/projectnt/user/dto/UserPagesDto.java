@@ -1,29 +1,33 @@
-package com.projectnt.review.dto;
+package com.projectnt.user.dto;
 
 import java.util.List;
 
-public class GetReviewPagesDto {
+public class UserPagesDto {
 
-    private List<GetReviewDto> reviews;
+    List<UserDto> users;
+
     private int currentPage;
+
     private long totalItems;
+
     private int totalPages;
+
     private boolean hasMore;
 
-    public GetReviewPagesDto(List<GetReviewDto> reviews, int currentPage, long totalItems, int totalPages, boolean hasMore) {
-        this.reviews = reviews;
+    public UserPagesDto(List<UserDto> users, int currentPage, long totalItems, int totalPages, boolean hasMore) {
+        this.users = users;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
         this.totalPages = totalPages;
         this.hasMore = hasMore;
     }
 
-    public List<GetReviewDto> getReviews() {
-        return reviews;
+    public List<UserDto> getUsers() {
+        return users;
     }
 
-    public void setReviews(List<GetReviewDto> reviews) {
-        this.reviews = reviews;
+    public void setUsers(List<UserDto> users) {
+        this.users = users;
     }
 
     public int getCurrentPage() {

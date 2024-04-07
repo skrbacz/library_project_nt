@@ -3,8 +3,11 @@ package com.projectnt.user.dto;
 public class CreateUserResponseDto {
 
     private long userId;
+
     private String lastName;
+
     private String email;
+
     private String name;
 
     public CreateUserResponseDto(long userId, String lastName, String email, String name) {

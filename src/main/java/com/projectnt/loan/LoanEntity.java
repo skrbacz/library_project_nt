@@ -1,10 +1,11 @@
 package com.projectnt.loan;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="loans", schema = "library")
@@ -24,15 +25,19 @@ public class LoanEntity {
     public UserEntity user;
 
     @Column(name="loanDate",nullable = false)
-    private Date loanDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate loanDate;
 
     @Basic
     @Column(name= "dueDate",nullable = false)
-    private Date dueDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
 
     @Basic
     @Column(name="returnDate")
-    private Date returnDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate returnDate;
+
 
     public long getLoanId() {
         return loanId;
@@ -46,39 +51,39 @@ public class LoanEntity {
         return book;
     }
 
-    public void setBook(BookEntity bookId) {
-        this.book = bookId;
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
     public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(UserEntity userId) {
-        this.user = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
-    public Date getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 }

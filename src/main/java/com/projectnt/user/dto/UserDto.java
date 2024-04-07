@@ -1,20 +1,23 @@
 package com.projectnt.user.dto;
 
-public class GetUserDto {
+public class UserDto {
 
     private Long userId;
+
     private String email;
+
     private String name;
+
     private String lastName;
 
-    public GetUserDto(Long userId, String email, String name, String lastName) {
+    private String username;
+
+    public UserDto(Long userId, String email, String name, String lastName, String username) {
         this.userId = userId;
         this.email = email;
         this.name = name;
         this.lastName = lastName;
-    }
-
-    public GetUserDto() {
+        this.username = username;
     }
 
     public Long getUserId() {
@@ -47,5 +50,13 @@ public class GetUserDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

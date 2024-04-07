@@ -1,17 +1,17 @@
 package com.projectnt.review.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projectnt.book.dto.BookDto;
 
 import java.time.LocalDate;
 
-public class CreateReviewResponseDto {
+public class ReviewDto {
 
     private long reviewId;
 
-    public long bookId;
+    public BookDto book;
 
-    public long userId;
+    public String username;
 
     private int rating;
 
@@ -20,10 +20,10 @@ public class CreateReviewResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate reviewDate;
 
-    public CreateReviewResponseDto(long reviewId, long bookId, long userId, int rating, String comment, LocalDate reviewDate) {
+    public ReviewDto(long reviewId, BookDto book, String username, int rating, String comment, LocalDate reviewDate) {
         this.reviewId = reviewId;
-        this.bookId = bookId;
-        this.userId = userId;
+        this.book = book;
+        this.username = username;
         this.rating = rating;
         this.comment = comment;
         this.reviewDate = reviewDate;
@@ -37,20 +37,20 @@ public class CreateReviewResponseDto {
         this.reviewId = reviewId;
     }
 
-    public long getBookId() {
-        return bookId;
+    public BookDto getBook() {
+        return book;
     }
 
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
+    public void setBook(BookDto book) {
+        this.book = book;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getRating() {

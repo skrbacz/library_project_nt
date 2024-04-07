@@ -1,18 +1,27 @@
-package com.projectnt.other.login_register_dto;
+package com.projectnt.security.login_register_dto;
 
 import com.projectnt.other.common_types.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class RegisterDto {
+
     @NotBlank(message = "Password is required")
+    @Schema(name="password", example = "password")
     private String password;
+
     @NotBlank(message = "Username is required")
+    @Schema(name="username", example = "user")
     private String username;
-    @NotNull
+
+    @NotNull(message = "Role is required")
+    @Schema(name="role", example = "ROLE_READER")
     private UserRole role;
+
     @NotBlank(message = "Email is required")
+    @Schema(name= "email", example = "example@email.com")
     @Email
     private String email;
 

@@ -1,29 +1,33 @@
-package com.projectnt.book.details.dto;
+package com.projectnt.review.dto;
 
 import java.util.List;
 
-public class GetBooksDetailsPagesDto {
+public class ReviewPagesDto {
 
-    private List<BookDetailsDto> booksDetails;
+    private List<ReviewDto> reviews;
+
     private int currentPage;
+
     private long totalItems;
+
     private int totalPages;
+
     private boolean hasMore;
 
-    public GetBooksDetailsPagesDto(List<BookDetailsDto> booksDetails, int currentPage, long totalItems, int totalPages, boolean hasMore) {
-        this.booksDetails = booksDetails;
+    public ReviewPagesDto(List<ReviewDto> reviews, int currentPage, long totalItems, int totalPages, boolean hasMore) {
+        this.reviews = reviews;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
         this.totalPages = totalPages;
         this.hasMore = hasMore;
     }
 
-    public List<BookDetailsDto> getBooksDetails() {
-        return booksDetails;
+    public List<ReviewDto> getReviews() {
+        return reviews;
     }
 
-    public void setBooksDetails(List<BookDetailsDto> booksDetails) {
-        this.booksDetails = booksDetails;
+    public void setReviews(List<ReviewDto> reviews) {
+        this.reviews = reviews;
     }
 
     public int getCurrentPage() {

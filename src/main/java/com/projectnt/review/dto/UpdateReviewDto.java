@@ -1,13 +1,17 @@
 package com.projectnt.review.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-public class PatchReviewDto {
+public class UpdateReviewDto {
 
+    @Schema(name= "rating", example = "5 (in the scale from 0 to 5)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private JsonNullable<Integer> rating;
+
+    @Schema(name= "comment", example = "comment", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private JsonNullable<String> comment;
 
-    public PatchReviewDto(JsonNullable<Integer> rating, JsonNullable<String> comment) {
+    public UpdateReviewDto(JsonNullable<Integer> rating, JsonNullable<String> comment) {
         this.rating = rating;
         this.comment = comment;
     }

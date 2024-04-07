@@ -1,6 +1,7 @@
-package com.projectnt.other.login_register_dto;
+package com.projectnt.security.login_register_dto;
 
 public class LoginResponseDto {
+
     private String token;
 
     public LoginResponseDto(String token) {

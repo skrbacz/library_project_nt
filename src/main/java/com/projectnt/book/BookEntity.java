@@ -149,20 +149,20 @@ public class BookEntity {
             this.genre = genre;
         }
 
-        public String getCoverImageUrl() {
-            return coverImageUrl;
-        }
-
-        public void setCoverImageUrl(String coverImageUrl) {
-            this.coverImageUrl = coverImageUrl;
-        }
-
         public String getSummary() {
             return summary;
         }
 
         public void setSummary(String summary) {
             this.summary = summary;
+        }
+
+        public String getCoverImageUrl() {
+            return coverImageUrl;
+        }
+
+        public void setCoverImageUrl(String coverImageUrl) {
+            this.coverImageUrl = coverImageUrl;
         }
     }
 }

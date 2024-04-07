@@ -1,9 +1,11 @@
 package com.projectnt.review;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projectnt.book.BookEntity;
 import com.projectnt.user.UserEntity;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -33,7 +35,8 @@ public class ReviewEntity {
 
     @Basic
     @Column(name="reviewDate")
-    private Date reviewDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reviewDate;
 
     public long getReviewId() {
         return reviewId;
@@ -47,16 +50,16 @@ public class ReviewEntity {
         return book;
     }
 
-    public void setBook(BookEntity bookId) {
-        this.book = bookId;
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
     public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(UserEntity userId) {
-        this.user = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public int getRating() {
@@ -75,11 +78,11 @@ public class ReviewEntity {
         this.comment = comment;
     }
 
-    public Date getReviewDate() {
+    public LocalDate getReviewDate() {
         return reviewDate;
     }
 
-    public void setReviewDate(Date reviewDate) {
+    public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
     }
 }

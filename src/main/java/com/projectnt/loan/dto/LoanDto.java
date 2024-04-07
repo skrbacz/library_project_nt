@@ -1,17 +1,18 @@
 package com.projectnt.loan.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projectnt.book.dto.BookDto;
+import com.projectnt.user.dto.UserDto;
 
 import java.time.LocalDate;
 
-
-public class CreateLoanResponseDto {
+public class LoanDto {
 
     private long loanId;
 
-    public long bookId;
+    public BookDto book;
 
-    public long userId;
+    public UserDto user;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate loanDate;
@@ -19,10 +20,10 @@ public class CreateLoanResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public CreateLoanResponseDto(long loanId, long bookId, long userId, LocalDate loanDate, LocalDate dueDate) {
+    public LoanDto(long loanId, BookDto book, UserDto user, LocalDate loanDate, LocalDate dueDate) {
         this.loanId = loanId;
-        this.bookId = bookId;
-        this.userId = userId;
+        this.book = book;
+        this.user = user;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
     }
@@ -35,20 +36,20 @@ public class CreateLoanResponseDto {
         this.loanId = loanId;
     }
 
-    public long getBookId() {
-        return bookId;
+    public BookDto getBook() {
+        return book;
     }
 
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
+    public void setBook(BookDto book) {
+        this.book = book;
     }
 
-    public long getUserId() {
-        return userId;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public LocalDate getLoanDate() {

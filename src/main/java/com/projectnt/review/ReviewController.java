@@ -1,16 +1,22 @@
 package com.projectnt.review;
 
 import com.projectnt.review.dto.*;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/reviews")
 @PreAuthorize("isAuthenticated()")
+@Tag(name = "Reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -21,34 +27,49 @@ public class ReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<GetReviewPagesDto> getAllReviews(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        GetReviewPagesDto dto = reviewService.getAll(page,size);
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<ReviewPagesDto> getAllReviews(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        ReviewPagesDto dto = reviewService.getAll(page,size);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
-    @GetMapping("/{review_id}")
-    public ResponseEntity<GetReviewDto> getOne(@PathVariable long review_id){
-        GetReviewDto dto= reviewService.getOneById(review_id);
+    @GetMapping("/{reviewId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Review found"),
+            @ApiResponse(responseCode = "401", description = "Review not found", content = @Content())
+    })
+    public ResponseEntity<ReviewDto> getOne(@PathVariable long reviewId){
+        ReviewDto dto= reviewService.getOneById(reviewId);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
-    @PatchMapping("/{review_id}")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<PatchReviewResponseDto> update(@PathVariable long review_id, @RequestBody PatchReviewDto dto){
-        PatchReviewResponseDto responseDto= reviewService.update(review_id, dto);
-        return new ResponseEntity<>(responseDto,HttpStatus.OK);
-    }
 
     @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Review successfully created"),
+            @ApiResponse(responseCode = "401", description = "Something went wrong", content = @Content())
+    })
     public ResponseEntity<CreateReviewResponseDto> create(@RequestBody @Validated CreateReviewDto review){
         var newReview= reviewService.create(review);
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/{review_id}")
-    public ResponseEntity<Void> delete(@PathVariable long review_id){
-        reviewService.delete(review_id);
+    @DeleteMapping("/{reviewId}")
+    @ApiResponse(responseCode = "200", description = "Review deleted successfully")
+    public ResponseEntity<Void> delete(@PathVariable long reviewId, Authentication authentication){
+        reviewService.delete(reviewId, authentication);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{reviewId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Update successful"),
+            @ApiResponse(responseCode = "401", description = "Update failed", content = @Content())
+    })
+    public ResponseEntity<UpdateReviewResponseDto> update(@PathVariable Long reviewId, @RequestBody UpdateReviewDto dto, Authentication authentication){
+        UpdateReviewResponseDto responseDto= reviewService.update(reviewId,dto, authentication);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+    }
+
 }

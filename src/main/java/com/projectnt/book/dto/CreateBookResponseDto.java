@@ -1,15 +1,19 @@
 package com.projectnt.book.dto;
 
-import com.projectnt.book.BookEntity;
-
 public class CreateBookResponseDto {
 
     private long bookId;
+
     private String isbn;
+
     private String title;
+
     private String author;
+
     private String publisher;
+
     private int yearPublished;
+
     private int availableCopies;
 
     public CreateBookResponseDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, int availableCopies) {
@@ -20,12 +24,6 @@ public class CreateBookResponseDto {
         this.publisher = publisher;
         this.yearPublished = yearPublished;
         this.availableCopies = availableCopies;
-    }
-
-    public CreateBookResponseDto() {
-    }
-
-    public CreateBookResponseDto(long bookId, BookEntity book, String genre, String summary, String coverImageUrl) {
     }
 
     public long getBookId() {

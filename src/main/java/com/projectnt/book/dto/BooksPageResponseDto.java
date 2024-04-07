@@ -1,28 +1,33 @@
-package com.projectnt.loan.dto;
+package com.projectnt.book.dto;
 
 import java.util.List;
 
-public class GetLoansPageResponseDto {
-    private List<GetLoanDto> loans;
+public class BooksPageResponseDto {
+
+    private List<BookDto> books;
+
     private int currentPage;
+
     private long totalItems;
+
     private int totalPages;
+
     private boolean hasMore;
 
-    public GetLoansPageResponseDto(List<GetLoanDto> loans, int currentPage, long totalItems, int totalPages, boolean hasMore) {
-        this.loans = loans;
+    public BooksPageResponseDto(List<BookDto> books, int currentPage, long totalItems, int totalPages, boolean hasMore) {
+        this.books = books;
         this.currentPage = currentPage;
         this.totalItems = totalItems;
         this.totalPages = totalPages;
         this.hasMore = hasMore;
     }
 
-    public List<GetLoanDto> getLoans() {
-        return loans;
+    public List<BookDto> getBooks() {
+        return books;
     }
 
-    public void setLoans(List<GetLoanDto> loans) {
-        this.loans = loans;
+    public void setBooks(List<BookDto> books) {
+        this.books = books;
     }
 
     public int getCurrentPage() {
