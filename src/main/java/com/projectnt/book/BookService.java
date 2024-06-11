@@ -99,7 +99,8 @@ public class BookService {
                     book.getPublisher(),
                     book.getYearPublished(),
                     book.getAvailableBooks() > 0,
-                    new BookDetailsDto("", "", "")
+                    new BookDetailsDto("", "", ""),
+                    book.getAvailableBooks()
             );
         } else {
             return new BookDto(
@@ -115,6 +116,7 @@ public class BookService {
                             bookDetails.getSummary(),
                             bookDetails.getCoverImageUrl()
                     )
+                    ,book.getAvailableBooks()
             );
         }
     }

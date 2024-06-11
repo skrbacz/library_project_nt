@@ -33,6 +33,13 @@ public class ReviewController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @GetMapping("/book/{bookId}")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<ReviewPagesDto> getAllReviewsForOneBook(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @PathVariable int bookId){
+        ReviewPagesDto dto = reviewService.getAllForOneBook(bookId,page,size);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
     @GetMapping("/{reviewId}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Review found"),

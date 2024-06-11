@@ -19,12 +19,16 @@ public class CreateLoanResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public CreateLoanResponseDto(long loanId, long bookId, long userId, LocalDate loanDate, LocalDate dueDate) {
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate returnDate;
+
+    public CreateLoanResponseDto(long loanId, long bookId, long userId, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate) {
         this.loanId = loanId;
         this.bookId = bookId;
         this.userId = userId;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
+        this.returnDate = returnDate;
     }
 
     public long getLoanId() {
@@ -65,5 +69,13 @@ public class CreateLoanResponseDto {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 }

@@ -40,7 +40,7 @@ public class UserService extends OwnershipService {
 
     public UserDto mapUser(UserEntity user){
         var auth= authRepository.findByUserUserId(user.getUserId());
-        return new UserDto(user.getUserId(),user.getLastName(),user.getEmail(),user.getName(),auth.getUsername());
+        return new UserDto(user.getUserId(),user.getEmail(),user.getName(),user.getLastName(),auth.getUsername(),auth.getRole().toString());
     }
 
 
@@ -57,7 +57,7 @@ public class UserService extends OwnershipService {
         AuthEntity auth = authRepository.findByUsername(username).orElseThrow(() -> UserDoesntExist.createWithUsername(username));
         UserEntity user = auth.getUser();
 
-        return new UserDto(user.getUserId(),user.getEmail(),user.getName(),user.getLastName(), username);
+        return new UserDto(user.getUserId(),user.getEmail(),user.getName(),user.getLastName(), username, auth.getRole().toString());
     }
 
     @PreAuthorize("hasRole('ADMIN') or isAuthenticated() and this.isOwner(authentication.name,#userId)")

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,15 @@ public class ReviewService extends OwnershipService {
         Pageable pageable= PageRequest.of(page,size);
 
         reviewPage =reviewRepository.findAll(pageable);
+        List<ReviewDto> reviewDtos= reviewPage.getContent().stream().map(this::mapReview).toList();
+        return new ReviewPagesDto(reviewDtos,reviewPage.getNumber(),reviewPage.getTotalElements(),reviewPage.getTotalPages(),reviewPage.hasNext());
+    }
+
+    public ReviewPagesDto getAllForOneBook(int bookId,int page, int size){
+        Page<ReviewEntity> reviewPage;
+        Pageable pageable= PageRequest.of(page,size, Sort.by("reviewDate").descending());
+
+        reviewPage =reviewRepository.findAllByBookBookId(bookId,pageable);
         List<ReviewDto> reviewDtos= reviewPage.getContent().stream().map(this::mapReview).toList();
         return new ReviewPagesDto(reviewDtos,reviewPage.getNumber(),reviewPage.getTotalElements(),reviewPage.getTotalPages(),reviewPage.hasNext());
     }
@@ -138,7 +148,8 @@ public class ReviewService extends OwnershipService {
                     book.getPublisher(),
                     book.getYearPublished(),
                     book.getAvailableBooks() > 0,
-                    new BookDetailsDto("", "", "")
+                    new BookDetailsDto("", "", ""),
+                    book.getAvailableBooks()
             );
         } else {
             bookDto= new BookDto(
@@ -153,7 +164,8 @@ public class ReviewService extends OwnershipService {
                             bookDetails.getGenre(),
                             bookDetails.getSummary(),
                             bookDetails.getCoverImageUrl()
-                    )
+                    ),
+                    bookDto.getAvailableBooks()
             );
         }
         return bookDto;

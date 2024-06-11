@@ -11,8 +11,9 @@ public class BookDto {
     private int yearPublished;
     private boolean isAvailable;
     private BookDetailsDto bookDetails;
+    private int availableBooks;
 
-    public BookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailable, BookDetailsDto bookDetails) {
+    public BookDto(long bookId, String isbn, String title, String author, String publisher, int yearPublished, boolean isAvailable, BookDetailsDto bookDetails, int availableBooks) {
         this.bookId = bookId;
         this.isbn = isbn;
         this.title = title;
@@ -21,6 +22,7 @@ public class BookDto {
         this.yearPublished = yearPublished;
         this.isAvailable = isAvailable;
         this.bookDetails = bookDetails;
+        this.availableBooks = availableBooks;
     }
 
     public BookDto() {
@@ -88,5 +90,13 @@ public class BookDto {
 
     public void setBookDetails(BookDetailsDto bookDetails) {
         this.bookDetails = bookDetails;
+    }
+
+    public int getAvailableBooks() {
+        return availableBooks;
+    }
+
+    public void setAvailableBooks(int availableBooks) {
+        this.availableBooks = availableBooks;
     }
 }

@@ -12,12 +12,23 @@ public class UserDto {
 
     private String username;
 
-    public UserDto(Long userId, String email, String name, String lastName, String username) {
+    private String userRole;
+
+    public UserDto(Long userId, String email, String name, String lastName, String username, String userRole) {
         this.userId = userId;
         this.email = email;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
+        this.userRole = userRole;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public Long getUserId() {

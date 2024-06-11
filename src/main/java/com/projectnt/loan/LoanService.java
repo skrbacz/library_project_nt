@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -46,7 +47,7 @@ public class LoanService extends OwnershipService {
     public LoansPageResponseDto getAll(Long userId, int page, int size) {
         Page<LoanEntity> loansPage;
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("loanDate").descending());
 
         if (userId == null) {
             loansPage = loanRepository.findAll(pageable);
@@ -85,13 +86,19 @@ public class LoanService extends OwnershipService {
 
         var newLoan = loanRepository.save(loanEntity);
 
-        return new CreateLoanResponseDto(newLoan.getLoanId(), newLoan.getBook().getBookId(), newLoan.getUser().getUserId(), newLoan.getLoanDate(), newLoan.getDueDate());
+        return new CreateLoanResponseDto(newLoan.getLoanId(), newLoan.getBook().getBookId(), newLoan.getUser().getUserId(), newLoan.getLoanDate(), newLoan.getDueDate(), null);
     }
 
     public void delete(long loanId) {
         if (!loanRepository.existsById(loanId)) {
             throw LoanDoesntExist.create(loanId);
         }
+
+        var loan= loanRepository.findById(loanId).orElseThrow(()-> LoanDoesntExist.create(loanId));
+        var book = bookRepository.findById(loan.getBook().getBookId()).orElseThrow(()-> BookDoesntExist.createWIthId(loan.getBook().getBookId()));
+        book.setAvailableBooks(book.getAvailableBooks() + 1);
+
+
         loanRepository.deleteById(loanId);
     }
 
@@ -120,7 +127,8 @@ public class LoanService extends OwnershipService {
                 loan.getUser().getLastName(),
                 loan.getUser().getEmail(),
                 loan.getUser().getName(),
-                auth.getUsername()
+                auth.getUsername(),
+                auth.getRole().toString()
         );
 
         var bookDto= mapBook(loan.getBook());
@@ -130,7 +138,8 @@ public class LoanService extends OwnershipService {
                 bookDto,
                 userDto,
                 loan.getLoanDate(),
-                loan.getDueDate()
+                loan.getDueDate(),
+                loan.getReturnDate()
         );
     }
 
@@ -146,7 +155,8 @@ public class LoanService extends OwnershipService {
                     book.getPublisher(),
                     book.getYearPublished(),
                     book.getAvailableBooks() > 0,
-                    new BookDetailsDto("", "", "")
+                    new BookDetailsDto("", "", ""),
+                    book.getAvailableBooks()
             );
         } else {
             return new BookDto(
@@ -161,7 +171,8 @@ public class LoanService extends OwnershipService {
                             bookDetails.getGenre(),
                             bookDetails.getSummary(),
                             bookDetails.getCoverImageUrl()
-                    )
+                    ),
+                    book.getAvailableBooks()
             );
         }
     }
